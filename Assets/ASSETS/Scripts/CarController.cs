@@ -23,21 +23,23 @@ public class CarController : MonoBehaviour
     public float smokeTime = 2f;
     public GameObject LeftEffect;
     public GameObject RightEffect;
+    private ParticleSystem.MainModule leftEffMain;
+    private ParticleSystem.MainModule rightEffMain;
     
     public eventButton ButtonLeft;
     public eventButton ButtonRight;
     public float steeringInput = 0;
     private float rotationAngle;
 
-    //Components
+    [Header("Components")]
     private Rigidbody2D carRigidbody2D;
-    private EscenarioController escenario;
-    private PauseMenu pauseMenu;
+    public PauseMenu pauseMenu;
     
     void Start() {
         carRigidbody2D = GetComponent<Rigidbody2D>();
-        escenario = FindObjectOfType<EscenarioController>();
-        pauseMenu = FindObjectOfType<PauseMenu>();
+        leftEffMain = LeftEffect.GetComponent<ParticleSystem>().main;
+        rightEffMain = RightEffect.GetComponent<ParticleSystem>().main;
+        
         defaultAccelerationFactor = accelerationFactor;
     }
 
@@ -46,18 +48,18 @@ public class CarController : MonoBehaviour
         //steeringInput = Input.GetAxis("Horizontal");
         bool LEFT = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || ButtonLeft.ispressed;
         bool RIGHT = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || ButtonRight.ispressed;
-        
+
         if(LEFT){
             steeringInput -= Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput + 1)/2));
-            LeftEffect.GetComponent<ParticleSystem>().startLifetime = smokeTime;
+            leftEffMain.startLifetime = smokeTime;
         }else{
-            LeftEffect.GetComponent<ParticleSystem>().startLifetime = 0f;
+            leftEffMain.startLifetime = 0f;
         } 
         if(RIGHT){
             steeringInput += Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput - 1)/2));
-            RightEffect.GetComponent<ParticleSystem>().startLifetime = smokeTime;
+            rightEffMain.startLifetime = smokeTime;
         }else{
-            RightEffect.GetComponent<ParticleSystem>().startLifetime = 0f;
+            rightEffMain.startLifetime = 0f;
         }
         if(RIGHT && LEFT){
             actualMaxSpeed = Mathf.Lerp(actualMaxSpeed, MinMaxSpeed.y, Time.deltaTime);
@@ -105,17 +107,17 @@ public class CarController : MonoBehaviour
         //Debug.Log(rightVelocity.magnitude/maxSpeed);
         carRigidbody2D.velocity = forwardVelocity + rightVelocity * ((1-driftFactor) + driftFactor*(rightVelocity.magnitude/actualMaxSpeed));
         
-        //Clamp Circle //da error
-        if (transform.position.magnitude > 10) { 
-            //float angle = ((Mathf.Atan2(transform.position.y-0, transform.position.x-0)*180 / Mathf.PI)+90)%360;
-            //transform.eulerAngles = new Vector3(0,0, Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.fixedDeltaTime * 2));
-            //rotationAngle = transform.eulerAngles.z;
-            carRigidbody2D.AddForce(-transform.position.normalized * (transform.position.magnitude - 10)*5, ForceMode2D.Force);
+        //Clamp Circle
+        if (transform.position.magnitude > 8) { 
+            carRigidbody2D.AddForce(-transform.position.normalized * (transform.position.magnitude - 8)*5, ForceMode2D.Force);
         }
+
+        //Apply rotation
         rotationAngle -= steeringInput * steeringSpeed * Time.fixedDeltaTime;
         carRigidbody2D.MoveRotation(rotationAngle);
     }
 
+    /*
     void OnCollisionEnter2D(Collision2D col){
         if(col.gameObject.tag == "Enemy"){
             Debug.Log("DEAD");
@@ -126,4 +128,5 @@ public class CarController : MonoBehaviour
             col.gameObject.GetComponent<zombieController>().die();
         }
     }
+    */
 }

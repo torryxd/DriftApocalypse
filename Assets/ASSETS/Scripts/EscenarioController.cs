@@ -24,24 +24,27 @@ public class EscenarioController : MonoBehaviour
         for(float x = 0f; x < escenarioSizes.x; x += escenarioSpacing){
             for (float y = 0f; y < escenarioSizes.y; y += escenarioSpacing){
                 Vector2 calcCirc = new Vector2(x-escenarioRadius, y-escenarioRadius);
-                if(calcCirc.magnitude <= escenarioRadius-0.5f && calcCirc.magnitude > 2){
-                    float sample = Mathf.PerlinNoise((x + perlinOffSet.x) * perlinScale, (y + perlinOffSet.y) * perlinScale);
-                    if(sample > 0.75f && sample < 0.85f){ //Probabilidad de cactus 
-                        generarObjeto(x, y, cacti, 0.3f);  
-                    }else if(sample < 0.415f){ //Probabilidad de camino
-                        generarObjeto(x, y, path, 0.3f);  
+                if(calcCirc.magnitude <= escenarioRadius-0.5f){
+                    if(calcCirc.magnitude > 2){ //Dejar centro
+                        float sample = Mathf.PerlinNoise((x + perlinOffSet.x) * perlinScale, (y + perlinOffSet.y) * perlinScale);
+                        if(sample > 0.75f && sample < 0.85f){ //Probabilidad de cactus 
+                            generarObjeto(x, y, cacti, 0.3f);
+                        }else if(sample < 0.415f){ //Probabilidad de camino
+                            generarObjeto(x, y, path, 0.3f);  
+                        }
                     }
                 }else if(calcCirc.magnitude <= escenarioRadius){
-                    generarObjeto(x, y, path, 0.3f); 
+                    generarObjeto(x, y, path, 0.25f);
                 }
             }
         }
+        Destroy(this);
     }
 
     void generarObjeto(float x, float y, GameObject obj, float randomPos){
         GameObject scenarioObj;
         Vector2 rndPos = Random.insideUnitCircle.normalized * escenarioSpacing*randomPos; //Random de la posicion
-        scenarioObj = Instantiate(obj, new Vector2(x + escenarioPosition.x + rndPos.x, y + escenarioPosition.y + rndPos.y), Quaternion.identity);
+        scenarioObj = Instantiate(obj, new Vector2(x + escenarioPosition.x + rndPos.x, y + escenarioPosition.y + rndPos.y), obj.transform.localRotation);
         scenarioObj.transform.parent = this.transform;
         scenarioObj.transform.eulerAngles = new Vector3(0,0, Random.rotation.eulerAngles.z);   
     }

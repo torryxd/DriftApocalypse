@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6394406216240132949}
   - component: {fileID: 6394406216240132950}
   - component: {fileID: 6394406216240132954}
-  - component: {fileID: 6394406216240132959}
+  - component: {fileID: 6371563258492103535}
   - component: {fileID: 6394406216240132955}
   - component: {fileID: 6394406216240132953}
   - component: {fileID: 6394406216240132952}
@@ -123,7 +123,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.17}
   m_Size: {x: 0.24, y: 0.34}
   m_Direction: 0
---- !u!50 &6394406216240132959
+--- !u!50 &6371563258492103535
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -143,7 +143,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &6394406216240132955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,3 +185,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveForce: 1
   maxSpeed: 1
+  car: {fileID: 0}
+  pauseMenu: {fileID: 0}

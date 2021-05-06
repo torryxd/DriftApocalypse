@@ -6,13 +6,10 @@ using TMPro;
 
 public class CamController : MonoBehaviour
 {
-    private CarController car;
-    private EscenarioController escenario;
     private Camera cam;
     private PixelCamera pixelCam;
-    private PauseMenu pauseMenu;
-    private float defaultCamSize;
     private GlobalSettings gs;
+    private float defaultCamSize;
 
     public float smoothOffsetSpeed = 5f;
     public float smoothRotationSpeed = 3f;
@@ -25,13 +22,14 @@ public class CamController : MonoBehaviour
 
     float fpsDeltaTime = 0.0f;
 
+    [Header("Components")]
+    public CarController car;
+    public PauseMenu pauseMenu;
+
     void Start() {
-        car = FindObjectOfType<CarController>();
-        pauseMenu = FindObjectOfType<PauseMenu>();
-        escenario = FindObjectOfType<EscenarioController>();
+        gs = FindObjectOfType<GlobalSettings>();
         cam = GetComponent<Camera>();
         pixelCam = GetComponent<PixelCamera>();
-        gs = FindObjectOfType<GlobalSettings>();
 
         defaultCamSize = GetComponent<Camera>().orthographicSize;
     }
@@ -76,15 +74,6 @@ public class CamController : MonoBehaviour
         fpsDeltaTime += (Time.unscaledDeltaTime - fpsDeltaTime) * 0.1f;
         
         
-    }
-
-    void LateUpdate(){
-        //clamp position
-        transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x, -8, 8),
-            Mathf.Clamp(transform.position.y, -8, 8),
-            transform.position.z
-        );
     }
 
     public void Shake(float magnitude, float duration, int freezeTime = 0){

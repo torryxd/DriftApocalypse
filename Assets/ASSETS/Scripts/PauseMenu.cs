@@ -16,12 +16,12 @@ public class PauseMenu : MonoBehaviour
     private Vector3 rightArrowScale;
     public GameObject textHold;
 
-    private CarController carController;
+    [Header("Components")]
+    public CarController carController;
 
     // Start is called before the first frame update
     void Start()
     {
-        carController = FindObjectOfType<CarController>();
         leftArrowScale = LeftArrow.transform.localScale;
         rightArrowScale = RightArrow.transform.localScale;
     }
