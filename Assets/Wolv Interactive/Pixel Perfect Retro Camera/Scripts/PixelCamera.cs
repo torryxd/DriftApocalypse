@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class PixelCamera : MonoBehaviour {
 	public int referenceHeight = 180;
 	[HideInInspector] //
@@ -18,7 +18,6 @@ public class PixelCamera : MonoBehaviour {
 	void Start () {
 		cam = GetComponent<Camera>();
         gs = FindObjectOfType<GlobalSettings>();
-
         this.enabled = gs.pixelEffect;
 	}
 

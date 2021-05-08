@@ -20,10 +20,8 @@ public class GlobalSettings : MonoBehaviour
         }
 
         LoadPlayerPrefs();
-        
-        //#if UNITY_ANDROID
-            //Application.targetFrameRate = 60;
-        //#endif
+
+        Application.targetFrameRate = 60;
     }
 
     public void SavePlayerPrefs(){
