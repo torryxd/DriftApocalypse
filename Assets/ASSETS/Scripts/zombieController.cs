@@ -18,7 +18,7 @@ public class zombieController : MonoBehaviour
         pauseMenu = FindObjectOfType<PauseMenu>();
         rb2d = GetComponent<Rigidbody2D>();
 
-        maxSpeed = Random.Range(0.8f, 1.2f);
+        maxSpeed -= Random.Range(0f, 0.5f);
     }
 
     // Update is called once per frame
