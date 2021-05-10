@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (41)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1 &16479711
@@ -300,6 +304,10 @@ PrefabInstance:
     - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
       propertyPath: m_Name
       value: ZombieGordo (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
@@ -433,6 +441,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &114988258
@@ -489,6 +501,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -547,6 +563,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (36)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1 &143260628
@@ -558,6 +578,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 143260629}
+  - component: {fileID: 143260630}
   m_Layer: 0
   m_Name: Smoke
   m_TagString: Untagged
@@ -582,6 +603,102 @@ Transform:
   m_Father: {fileID: 736518584}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &143260630
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143260628}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 493531f95092e8648bfd164333ab0c85, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1.36
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &145605536
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,6 +971,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (38)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &229479389
@@ -910,6 +1031,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -968,6 +1093,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (27)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &245378783
@@ -1025,6 +1154,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &258970869
@@ -1081,6 +1214,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -6019,6 +6156,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (41)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &301600115
@@ -6075,6 +6216,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (35)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -6133,6 +6278,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &402509425
@@ -6189,6 +6338,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -6247,6 +6400,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (40)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &425046223
@@ -6303,6 +6460,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -6361,6 +6522,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &458623395
@@ -6417,6 +6582,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -6622,6 +6791,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (35)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &506370812
@@ -6678,6 +6851,10 @@ PrefabInstance:
     - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
       propertyPath: m_Name
       value: ZombieGordo (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
@@ -7004,6 +7181,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (28)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &602316350
@@ -7060,6 +7241,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (29)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -7118,6 +7303,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (37)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &614633274
@@ -7174,6 +7363,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -7414,7 +7607,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 676938720}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 736518584}
@@ -7433,7 +7626,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.35}
+  m_Offset: {x: 0, y: 0.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -7500,6 +7693,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -7648,6 +7845,7 @@ GameObject:
   m_Component:
   - component: {fileID: 699883463}
   - component: {fileID: 699883464}
+  - component: {fileID: 699883465}
   m_Layer: 0
   m_Name: DIEcollider
   m_TagString: Untagged
@@ -7685,6 +7883,102 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.04}
   m_Size: {x: 0.325, y: 0.2}
   m_Direction: 1
+--- !u!82 &699883465
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699883462}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: e18d4ba8e20f0264dbb687d11af1fddf, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.7
+  m_Pitch: 1.36
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &717504409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7739,6 +8033,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (26)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -7880,6 +8178,10 @@ MonoBehaviour:
   ButtonRight: {fileID: 145605541}
   steeringInput: 0
   pauseMenu: {fileID: 753394124}
+  FrontCollider: {fileID: 699883464}
+  BackCollider: {fileID: 676938722}
+  EngineSound: {fileID: 699883465}
+  SmokeSound: {fileID: 143260630}
 --- !u!70 &736518587
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -8372,6 +8674,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (25)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &821847864
@@ -8428,6 +8734,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -8525,6 +8835,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &866389813
@@ -8582,6 +8896,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (27)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &899591580
@@ -8638,6 +8956,10 @@ PrefabInstance:
     - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
       propertyPath: m_Name
       value: ZombieGordo (30)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
@@ -8833,6 +9155,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (34)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &923109989
@@ -8890,6 +9216,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (39)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &958639178
@@ -8946,6 +9276,10 @@ PrefabInstance:
     - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
       propertyPath: m_Name
       value: ZombieGordo (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
@@ -9160,6 +9494,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1 &1037920151
@@ -9364,6 +9702,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &1069729117
@@ -9420,6 +9762,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (32)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -9478,6 +9824,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &1092158654
@@ -9534,6 +9884,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -9667,6 +10021,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (33)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &1136961730
@@ -9723,6 +10081,10 @@ PrefabInstance:
     - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
       propertyPath: m_Name
       value: ZombieGordo (29)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
@@ -9781,6 +10143,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &1157950870
@@ -9837,6 +10203,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -9971,6 +10341,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &1284253772
@@ -10027,6 +10401,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -10181,6 +10559,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (38)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &1325121499
@@ -10237,6 +10619,10 @@ PrefabInstance:
     - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
       propertyPath: m_Name
       value: ZombieGordo (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
@@ -10429,6 +10815,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (40)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &1352347464
@@ -10485,6 +10875,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (36)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -10678,6 +11072,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &1423858445
@@ -10735,6 +11133,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &1438040605
@@ -10791,6 +11193,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (39)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -11058,6 +11464,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &1595528097
@@ -11114,6 +11524,10 @@ PrefabInstance:
     - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
       propertyPath: m_Name
       value: ZombieGordo (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
@@ -11172,6 +11586,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (33)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &1600839062
@@ -11228,6 +11646,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -11286,6 +11708,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &1623888114
@@ -11342,6 +11768,10 @@ PrefabInstance:
     - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
       propertyPath: m_Name
       value: ZombieGordo (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
@@ -11556,6 +11986,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &1660994722
@@ -11612,6 +12046,10 @@ PrefabInstance:
     - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
       propertyPath: m_Name
       value: ZombieGordo (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
@@ -11670,6 +12108,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (32)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &1688268922
@@ -11727,6 +12169,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (34)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &1697304152
@@ -11783,6 +12229,10 @@ PrefabInstance:
     - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
       propertyPath: m_Name
       value: ZombieGordo (37)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
@@ -11975,6 +12425,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -12262,6 +12716,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1 &1776568384
@@ -12456,6 +12914,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1 &1788729498
@@ -12648,6 +13110,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -17586,6 +18052,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (28)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &1890227755
@@ -17642,6 +18112,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (31)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -17700,6 +18174,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &1985734490
@@ -17756,6 +18234,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (30)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
@@ -18850,7 +19332,7 @@ ParticleSystem:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-      cycleCount: 6
+      cycleCount: 8
       repeatInterval: 0.02
       probability: 0.4
   SizeModule:
@@ -22676,6 +23158,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1 &2064441381
@@ -22815,6 +23301,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieFlaco (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
 --- !u!1001 &2084197106
@@ -22872,6 +23362,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieGordo (31)
       objectReference: {fileID: 0}
+    - target: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
 --- !u!1001 &2088150594
@@ -22928,6 +23422,10 @@ PrefabInstance:
     - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
       propertyPath: m_Name
       value: ZombieFlaco (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da7d7156724cb04590742df41c577c9, type: 3}

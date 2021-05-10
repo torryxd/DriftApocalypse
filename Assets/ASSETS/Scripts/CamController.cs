@@ -45,8 +45,8 @@ public class CamController : MonoBehaviour
         
         //camera offset
         Vector3 desiredPosition = new Vector3(
-            car.transform.position.x + (v3speed.x * 0.7f),
-            car.transform.position.y + (v3speed.y * 0.7f),
+            car.transform.position.x + (v3speed.x * 0.5f) + (car.transform.up.normalized.x * 0.35f),
+            car.transform.position.y + (v3speed.y * 0.5f) + (car.transform.up.normalized.y * 0.35f),
             this.transform.position.z);
         transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothOffsetSpeed * Time.deltaTime);
         
@@ -72,7 +72,6 @@ public class CamController : MonoBehaviour
 
         //FPS
         fpsDeltaTime += (Time.unscaledDeltaTime - fpsDeltaTime) * 0.1f;
-        
         
     }
 

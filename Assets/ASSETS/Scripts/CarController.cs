@@ -36,6 +36,10 @@ public class CarController : MonoBehaviour
     [Header("Components")]
     private Rigidbody2D carRigidbody2D;
     public PauseMenu pauseMenu;
+    public Collider2D FrontCollider;
+    public Collider2D BackCollider;
+    public AudioSource EngineSound;
+    public AudioSource SmokeSound;
     
     void Start() {
         carRigidbody2D = GetComponent<Rigidbody2D>();
@@ -55,12 +59,14 @@ public class CarController : MonoBehaviour
         if(LEFT){
             steeringInput -= Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput + 1)/2));
             leftEffMain.startLifetime = smokeTime;
+            SmokeSound.pitch = 1.15f;
         }else{
             leftEffMain.startLifetime = 0f;
         } 
         if(RIGHT){
             steeringInput += Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput - 1)/2));
             rightEffMain.startLifetime = smokeTime;
+            SmokeSound.pitch = 0.85f;
         }else{
             rightEffMain.startLifetime = 0f;
         }
@@ -70,19 +76,26 @@ public class CarController : MonoBehaviour
                 this.transform.localScale = new Vector3(0.875f, 1.125f, 1);
             }
             accelerationFactor = defaultAccelerationFactor * boostAcceleration;
+            SmokeSound.pitch = 1;
         }else{
             actualMaxSpeed = Mathf.Lerp(actualMaxSpeed, MinMaxSpeed.x, Time.deltaTime*3);
             accelerationFactor = defaultAccelerationFactor;
         }
         if(!RIGHT && !LEFT){
             steeringInput -= Time.deltaTime * Mathf.Sign(steeringInput) * resetWheelSteeringFactor;
+            SmokeSound.pitch = 1;
         }
         steeringInput = Mathf.Clamp(steeringInput, -1, 1);
         this.transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, Time.deltaTime * 2f);
         
+        //Girar ruedas
         Vector3 wheelRotation = new Vector3(0,0,steeringInput * -30);
         tyreLeft.transform.localEulerAngles = wheelRotation;
         tyreRight.transform.localEulerAngles = wheelRotation;
+
+        //Sonido
+        EngineSound.pitch = 1 + ((carRigidbody2D.velocity.magnitude / MinMaxSpeed.y) * 0.7f);
+        SmokeSound.volume = Mathf.Clamp(Mathf.Abs(steeringInput), 0.3f, 1f);
         
         if(pauseMenu.paused && Mathf.Abs(steeringInput) >= 1){ //unpause
             pauseMenu.paused = false;
