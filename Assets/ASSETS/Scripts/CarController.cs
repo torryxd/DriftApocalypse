@@ -25,11 +25,13 @@ public class CarController : MonoBehaviour
     public GameObject RightEffect;
     private ParticleSystem.MainModule leftEffMain;
     private ParticleSystem.MainModule rightEffMain;
+    private TrailRenderer[] trailRenderers;
     
     public eventButton ButtonLeft;
     public eventButton ButtonRight;
     public float steeringInput = 0;
     private float rotationAngle;
+    private Vector2 rightVelocity;
 
     [Header("Components")]
     private Rigidbody2D carRigidbody2D;
@@ -39,7 +41,8 @@ public class CarController : MonoBehaviour
         carRigidbody2D = GetComponent<Rigidbody2D>();
         leftEffMain = LeftEffect.GetComponent<ParticleSystem>().main;
         rightEffMain = RightEffect.GetComponent<ParticleSystem>().main;
-        
+        trailRenderers = GetComponentsInChildren<TrailRenderer>();
+
         defaultAccelerationFactor = accelerationFactor;
     }
 
@@ -81,30 +84,36 @@ public class CarController : MonoBehaviour
         tyreLeft.transform.localEulerAngles = wheelRotation;
         tyreRight.transform.localEulerAngles = wheelRotation;
         
-        if(pauseMenu.paused && Mathf.Abs(steeringInput) >= 1){
+        if(pauseMenu.paused && Mathf.Abs(steeringInput) >= 1){ //unpause
             pauseMenu.paused = false;
             pauseMenu.unPauseFirstPause();
+        }
+
+        Debug.Log(rotationAngle);
+        if(rightVelocity.magnitude/actualMaxSpeed > 0.8f || Mathf.Abs(steeringInput) > 0.35f){ //drift factor / Trail renderers
+            trailRenderers[0].emitting = true;
+            trailRenderers[1].emitting = true;
+        }else{
+            trailRenderers[0].emitting = false;
+            trailRenderers[1].emitting = false;
         }
     }
 
     void FixedUpdate() {
-        
         if(pauseMenu.paused)
             return;
-        //Create a force for the engine
-        float speedIncrement = (actualMaxSpeed - carRigidbody2D.velocity.magnitude)/actualMaxSpeed;
-        Vector2 engineForceVector = transform.up * accelerationFactor * Time.fixedDeltaTime * (1+speedIncrement);
-        carRigidbody2D.AddForce(engineForceVector, ForceMode2D.Force);
         
-        //Limit max speed
-        if (carRigidbody2D.velocity.magnitude > actualMaxSpeed) {
-            carRigidbody2D.velocity = Vector2.ClampMagnitude(carRigidbody2D.velocity, actualMaxSpeed);
+        //Create a force for the engine & limit max speed
+        if (carRigidbody2D.velocity.magnitude <= actualMaxSpeed) {
+            float speedIncrement = (actualMaxSpeed - carRigidbody2D.velocity.magnitude)/actualMaxSpeed;
+            Vector2 engineForceVector = transform.up * accelerationFactor * Time.fixedDeltaTime * (1+speedIncrement);
+            carRigidbody2D.AddForce(engineForceVector, ForceMode2D.Force);
         }
         
         //Kill Orthogonal Velocity
         Vector2 forwardVelocity = transform.up * Vector2.Dot(carRigidbody2D.velocity, transform.up);
-        Vector2 rightVelocity = transform.right * Vector2.Dot(carRigidbody2D.velocity, transform.right);
-        //Debug.Log(rightVelocity.magnitude/maxSpeed);
+        rightVelocity = transform.right * Vector2.Dot(carRigidbody2D.velocity, transform.right);
+        //Debug.Log(rightVelocity.magnitude/actualMaxSpeed);
         carRigidbody2D.velocity = forwardVelocity + rightVelocity * ((1-driftFactor) + driftFactor*(rightVelocity.magnitude/actualMaxSpeed));
         
         //Clamp Circle
