@@ -89,8 +89,7 @@ public class CarController : MonoBehaviour
             pauseMenu.unPauseFirstPause();
         }
 
-        Debug.Log(rotationAngle);
-        if(rightVelocity.magnitude/actualMaxSpeed > 0.8f || Mathf.Abs(steeringInput) > 0.35f){ //drift factor / Trail renderers
+        if(rightVelocity.magnitude/actualMaxSpeed > 0.5f || Mathf.Abs(steeringInput) > 0.75f){ //drift factor / Trail renderers
             trailRenderers[0].emitting = true;
             trailRenderers[1].emitting = true;
         }else{

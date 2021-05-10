@@ -31,6 +31,7 @@ public class zombieController : MonoBehaviour
             if (rb2d.velocity.magnitude > maxSpeed) {
                 rb2d.velocity = Vector2.ClampMagnitude(rb2d.velocity, maxSpeed);
             }
+            
         }
     }
 
