@@ -72,7 +72,7 @@ public class CarController : MonoBehaviour
                 this.transform.localScale = new Vector3(0.875f, 1.125f, 1);
                 SmokeSound.pitch = 1f;
                 accelerationFactor = defaultAccelerationFactor * boostAcceleration;
-                SmokeSound.volume = SmokeSoundVolume*2;
+                SmokeSound.volume = SmokeSoundVolume*1.75F;
                 firstLEFTandRIGHT = false;
             }
         }else{
@@ -86,7 +86,7 @@ public class CarController : MonoBehaviour
 
         if(LEFT) {
             steeringInput -= Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput + 1)/2));
-            SmokeSound.volume = Mathf.Lerp(SmokeSound.volume, Mathf.Cos(Time.time*10f) * 0.01f + (SmokeSoundVolume*0.7f), Time.deltaTime*2);
+            SmokeSound.volume = Mathf.Lerp(SmokeSound.volume, Mathf.Cos(Time.time*10f) * 0.01f + (SmokeSoundVolume*0.5f), Time.deltaTime*2.5f);
 
             if(firstLEFT){
                 leftEffMain.startLifetime = smokeTime;
@@ -104,7 +104,7 @@ public class CarController : MonoBehaviour
 
         if(RIGHT) {
             steeringInput += Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput - 1)/2));
-            SmokeSound.volume = Mathf.Lerp(SmokeSound.volume, Mathf.Cos(Time.time*10f) * 0.01f + (SmokeSoundVolume*0.7f), Time.deltaTime*2);
+            SmokeSound.volume = Mathf.Lerp(SmokeSound.volume, Mathf.Cos(Time.time*10f) * 0.01f + (SmokeSoundVolume*0.5f), Time.deltaTime*2.5f);
 
             if(firstRIGHT){
                 rightEffMain.startLifetime = smokeTime;
@@ -145,7 +145,7 @@ public class CarController : MonoBehaviour
         if(rightVelocity.magnitude/actualMaxSpeed > 0.5f || Mathf.Abs(steeringInput) > 0.75f){ //Drift factor / Trail renderers
             trailRenderers[0].emitting = true;
             trailRenderers[1].emitting = true;
-            GravelSound.volume = GravelSoundVolume * 1f;
+            GravelSound.volume = GravelSoundVolume * ((rightVelocity.magnitude/actualMaxSpeed + Mathf.Abs(steeringInput))/2);
             GravelSound.pitch = 0.7f + Mathf.Cos(Time.time*5)*0.05f;
         }else{
             trailRenderers[0].emitting = false;
