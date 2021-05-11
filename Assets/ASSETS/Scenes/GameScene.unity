@@ -6130,7 +6130,7 @@ GameObject:
   - component: {fileID: 676938722}
   - component: {fileID: 676938723}
   m_Layer: 0
-  m_Name: KILLERcollider
+  m_Name: FRONTcollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6419,7 +6419,7 @@ GameObject:
   - component: {fileID: 699883464}
   - component: {fileID: 699883465}
   m_Layer: 0
-  m_Name: DIEcollider
+  m_Name: BACKcollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7956,11 +7956,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eaa8e2481cde1a4cbbf84ef9f14dc38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnQueue: 1
-  defaultSpawnRate: 1
   spawnRadius: 10
-  zombieGordo: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+  FlacoSpawnQueue: 1
   zombieFlaco: {fileID: 7251121144528731750, guid: 1da7d7156724cb04590742df41c577c9, type: 3}
+  FlacoIncrementSpawnQueue: 0.99
+  GordoSpawnQueue: 1
+  zombieGordo: {fileID: 6394406216240132951, guid: cae3d31d8c2b9ec40af2797040c557b5, type: 3}
+  GordoIncrementSpawnQueue: 0.99
 --- !u!4 &1294116120
 Transform:
   m_ObjectHideFlags: 0

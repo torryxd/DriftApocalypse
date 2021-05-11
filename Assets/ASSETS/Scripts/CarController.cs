@@ -181,16 +181,16 @@ public class CarController : MonoBehaviour
         carRigidbody2D.MoveRotation(rotationAngle);
     }
 
-    /*
-    void OnCollisionEnter2D(Collision2D col){
-        if(col.gameObject.tag == "Enemy"){
-            Debug.Log("DEAD");
+    void OnTriggerEnter2D(Collider2D other){
+
+        if(other == FrontCollider){
+            Debug.Log("Front");
+        }else if(other == BackCollider){
+            Debug.Log("Back");
+        }
+
+        if(other.gameObject.tag == "Enemy"){
+            other.gameObject.GetComponent<zombieController>().die();
         }
     }
-    void OnTriggerEnter2D(Collider2D col){
-        if(col.gameObject.tag == "Enemy"){
-            col.gameObject.GetComponent<zombieController>().die();
-        }
-    }
-    */
 }

@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class zombieController : MonoBehaviour
 {
+    public string mobName = "Flaco";
     public float moveForce = 1;
     public float maxSpeed = 1;
 
     private CarController car;
     private Rigidbody2D rb2d;
     private PauseMenu pauseMenu;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         car = FindObjectOfType<CarController>();
         pauseMenu = FindObjectOfType<PauseMenu>();
+        gameManager = FindObjectOfType<GameManager>();
         rb2d = GetComponent<Rigidbody2D>();
 
         maxSpeed -= Random.Range(0f, 0.5f);
@@ -36,6 +39,7 @@ public class zombieController : MonoBehaviour
     }
 
     public void die(){
+        gameManager.IncreaseRate(mobName);
         Destroy(this.gameObject);
     }
 }
