@@ -7,7 +7,7 @@ public class CarController : MonoBehaviour
 {
     [Header("Car engine")]
     public float accelerationFactor = 200f;
-    private float defaultAccelerationFactor;
+    public float defaultAccelerationFactor;
     public float actualMaxSpeed = 2.5f;
     public Vector2 MinMaxSpeed;
     public float boostAcceleration = 1.35f;
@@ -35,11 +35,16 @@ public class CarController : MonoBehaviour
 
     [Header("Components")]
     private Rigidbody2D carRigidbody2D;
+    public CamController cam;
     public PauseMenu pauseMenu;
+    public GameObject EndPoint;
     public Collider2D FrontCollider;
     public Collider2D BackCollider;
     public AudioSource EngineSound;
+    public AudioSource GravelSound;
+    private float GravelSoundVolume;
     public AudioSource SmokeSound;
+    private float SmokeSoundVolume;
     
     void Start() {
         carRigidbody2D = GetComponent<Rigidbody2D>();
@@ -48,6 +53,9 @@ public class CarController : MonoBehaviour
         trailRenderers = GetComponentsInChildren<TrailRenderer>();
 
         defaultAccelerationFactor = accelerationFactor;
+        GravelSoundVolume = GravelSound.volume;
+        SmokeSoundVolume = SmokeSound.volume;
+        
     }
 
     void Update() {
@@ -55,59 +63,69 @@ public class CarController : MonoBehaviour
         //steeringInput = Input.GetAxis("Horizontal");
         bool LEFT = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || ButtonLeft.ispressed;
         bool RIGHT = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || ButtonRight.ispressed;
-
-        if(LEFT){
-            steeringInput -= Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput + 1)/2));
-            leftEffMain.startLifetime = smokeTime;
-            SmokeSound.pitch = 1.15f;
-        }else{
-            leftEffMain.startLifetime = 0f;
-        } 
-        if(RIGHT){
-            steeringInput += Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput - 1)/2));
-            rightEffMain.startLifetime = smokeTime;
-            SmokeSound.pitch = 0.85f;
-        }else{
-            rightEffMain.startLifetime = 0f;
-        }
-        if(RIGHT && LEFT){
+        
+        if(RIGHT && LEFT) {
             actualMaxSpeed = Mathf.Lerp(actualMaxSpeed, MinMaxSpeed.y, Time.deltaTime);
+
             if(accelerationFactor == defaultAccelerationFactor){
                 this.transform.localScale = new Vector3(0.875f, 1.125f, 1);
+                SmokeSound.pitch = 1f;
+                accelerationFactor = defaultAccelerationFactor * boostAcceleration;
             }
-            accelerationFactor = defaultAccelerationFactor * boostAcceleration;
-            SmokeSound.pitch = 1;
         }else{
             actualMaxSpeed = Mathf.Lerp(actualMaxSpeed, MinMaxSpeed.x, Time.deltaTime*3);
             accelerationFactor = defaultAccelerationFactor;
         }
-        if(!RIGHT && !LEFT){
-            steeringInput -= Time.deltaTime * Mathf.Sign(steeringInput) * resetWheelSteeringFactor;
-            SmokeSound.pitch = 1;
+
+        if(LEFT) {
+            steeringInput -= Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput + 1)/2));
+            leftEffMain.startLifetime = smokeTime;
+            SmokeSound.pitch = 1.075f;
+            SmokeSound.volume = Mathf.Cos(Time.time*10f) * 0.1f + SmokeSoundVolume;
+        }else{
+            leftEffMain.startLifetime = 0f;
         }
+
+        if(RIGHT) {
+            steeringInput += Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput - 1)/2));
+            rightEffMain.startLifetime = smokeTime;
+            SmokeSound.pitch = 0.925f;
+            SmokeSound.volume = Mathf.Cos(Time.time*10f) * 0.1f + SmokeSoundVolume;
+        }else{
+            rightEffMain.startLifetime = 0f;
+        }
+
+        if(!RIGHT && !LEFT) {
+            steeringInput -= Time.deltaTime * Mathf.Sign(steeringInput) * resetWheelSteeringFactor;
+        }
+
         steeringInput = Mathf.Clamp(steeringInput, -1, 1);
         this.transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, Time.deltaTime * 2f);
         
+
         //Girar ruedas
         Vector3 wheelRotation = new Vector3(0,0,steeringInput * -30);
         tyreLeft.transform.localEulerAngles = wheelRotation;
         tyreRight.transform.localEulerAngles = wheelRotation;
 
         //Sonido
-        EngineSound.pitch = 1 + ((carRigidbody2D.velocity.magnitude / MinMaxSpeed.y) * 0.7f);
-        SmokeSound.volume = Mathf.Clamp(Mathf.Abs(steeringInput), 0.3f, 1f);
+        EngineSound.pitch = 1 + ((carRigidbody2D.velocity.magnitude / MinMaxSpeed.y) * (1f + Mathf.Cos(Time.time*10) * 0.075f));
+        SmokeSound.volume = Mathf.Lerp(SmokeSound.volume, SmokeSoundVolume * 0f, Time.deltaTime * 6);
         
         if(pauseMenu.paused && Mathf.Abs(steeringInput) >= 1){ //unpause
             pauseMenu.paused = false;
             pauseMenu.unPauseFirstPause();
         }
 
-        if(rightVelocity.magnitude/actualMaxSpeed > 0.5f || Mathf.Abs(steeringInput) > 0.75f){ //drift factor / Trail renderers
+        if(rightVelocity.magnitude/actualMaxSpeed > 0.5f || Mathf.Abs(steeringInput) > 0.75f){ //Drift factor / Trail renderers
             trailRenderers[0].emitting = true;
             trailRenderers[1].emitting = true;
+            GravelSound.volume = GravelSoundVolume * 1f;
+            GravelSound.pitch = 0.7f + Mathf.Cos(Time.time*5)*0.05f;
         }else{
             trailRenderers[0].emitting = false;
             trailRenderers[1].emitting = false;
+            GravelSound.volume = Mathf.Lerp(GravelSound.volume, GravelSoundVolume*0.2f, Time.deltaTime*8);
         }
     }
 

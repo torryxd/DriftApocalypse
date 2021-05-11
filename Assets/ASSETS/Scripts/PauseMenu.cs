@@ -18,6 +18,7 @@ public class PauseMenu : MonoBehaviour
 
     [Header("Components")]
     public CarController carController;
+    public CamController cam;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +56,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause(){
         if(!firstTimePause){
-            FindObjectOfType<CamController>().Shake(0.1f, 0.125f);
+            cam.Shake(0.1f, 0.125f);
             paused = !paused;
             pauseLayer.SetActive(paused);
             Time.timeScale = (paused ? 0 : 1);

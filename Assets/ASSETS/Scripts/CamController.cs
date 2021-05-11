@@ -44,9 +44,10 @@ public class CamController : MonoBehaviour
         txtSpeed.text = str; txtSpeed.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = str;
         
         //camera offset
+        bool boosting = car.accelerationFactor != car.defaultAccelerationFactor;
         Vector3 desiredPosition = new Vector3(
-            car.transform.position.x + (v3speed.x * 0.5f) + (car.transform.up.normalized.x * 0.35f),
-            car.transform.position.y + (v3speed.y * 0.5f) + (car.transform.up.normalized.y * 0.35f),
+            car.transform.position.x + (v3speed.x * (boosting ? 0.525f : 0.5f)) + (car.transform.up.normalized.x * 0.4f),
+            car.transform.position.y + (v3speed.y * (boosting ? 0.525f : 0.5f)) + (car.transform.up.normalized.y * 0.4f),
             this.transform.position.z);
         transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothOffsetSpeed * Time.deltaTime);
         

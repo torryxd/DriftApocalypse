@@ -78,6 +78,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 91
       Script: {instanceID: 0}
     - Class: 95
@@ -450,7 +454,7 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: e35c411e5c569c2d11ff477f2244006a
+      Hash: 08c8ab7ee577e272e30f396412253958
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PauseMenu
@@ -612,7 +616,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: 21c29b1e451a146ddf85485392bee62d
+      Hash: 84ce67fe09363ae636f011ade2e5d455
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CarController
