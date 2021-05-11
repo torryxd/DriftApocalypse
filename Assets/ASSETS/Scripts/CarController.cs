@@ -58,6 +58,7 @@ public class CarController : MonoBehaviour
         
     }
 
+    bool firstLEFT, firstRIGHT, firstLEFTandRIGHT;
     void Update() {
         
         //steeringInput = Input.GetAxis("Horizontal");
@@ -67,32 +68,56 @@ public class CarController : MonoBehaviour
         if(RIGHT && LEFT) {
             actualMaxSpeed = Mathf.Lerp(actualMaxSpeed, MinMaxSpeed.y, Time.deltaTime);
 
-            if(accelerationFactor == defaultAccelerationFactor){
+            if(firstLEFTandRIGHT){
                 this.transform.localScale = new Vector3(0.875f, 1.125f, 1);
                 SmokeSound.pitch = 1f;
                 accelerationFactor = defaultAccelerationFactor * boostAcceleration;
+                SmokeSound.volume = SmokeSoundVolume*2;
+                firstLEFTandRIGHT = false;
             }
         }else{
             actualMaxSpeed = Mathf.Lerp(actualMaxSpeed, MinMaxSpeed.x, Time.deltaTime*3);
-            accelerationFactor = defaultAccelerationFactor;
+
+            if(!firstLEFTandRIGHT){
+                accelerationFactor = defaultAccelerationFactor;
+                firstLEFTandRIGHT = true;
+            }
         }
 
         if(LEFT) {
             steeringInput -= Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput + 1)/2));
-            leftEffMain.startLifetime = smokeTime;
-            SmokeSound.pitch = 1.075f;
-            SmokeSound.volume = Mathf.Cos(Time.time*10f) * 0.01f + SmokeSoundVolume;
+            SmokeSound.volume = Mathf.Lerp(SmokeSound.volume, Mathf.Cos(Time.time*10f) * 0.01f + (SmokeSoundVolume*0.7f), Time.deltaTime*2);
+
+            if(firstLEFT){
+                leftEffMain.startLifetime = smokeTime;
+                SmokeSound.pitch = 1.075f;
+                if(SmokeSound.volume < SmokeSoundVolume)
+                    SmokeSound.volume = SmokeSoundVolume;
+                firstLEFT = false;
+            }
         }else{
-            leftEffMain.startLifetime = 0f;
+            if(!firstLEFT){
+                leftEffMain.startLifetime = 0f;
+                firstLEFT = true;
+            }
         }
 
         if(RIGHT) {
             steeringInput += Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput - 1)/2));
-            rightEffMain.startLifetime = smokeTime;
-            SmokeSound.pitch = 0.925f;
-            SmokeSound.volume = Mathf.Cos(Time.time*10f) * 0.01f + SmokeSoundVolume;
+            SmokeSound.volume = Mathf.Lerp(SmokeSound.volume, Mathf.Cos(Time.time*10f) * 0.01f + (SmokeSoundVolume*0.7f), Time.deltaTime*2);
+
+            if(firstRIGHT){
+                rightEffMain.startLifetime = smokeTime;
+                SmokeSound.pitch = 0.925f;
+                if(SmokeSound.volume < SmokeSoundVolume)
+                    SmokeSound.volume = SmokeSoundVolume;
+                firstRIGHT = false;
+            }
         }else{
-            rightEffMain.startLifetime = 0f;
+            if(!firstRIGHT){
+                rightEffMain.startLifetime = 0f;
+                firstRIGHT = true;
+            }
         }
 
         if(!RIGHT && !LEFT) {
