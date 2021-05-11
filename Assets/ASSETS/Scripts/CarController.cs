@@ -81,7 +81,7 @@ public class CarController : MonoBehaviour
             steeringInput -= Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput + 1)/2));
             leftEffMain.startLifetime = smokeTime;
             SmokeSound.pitch = 1.075f;
-            SmokeSound.volume = Mathf.Cos(Time.time*10f) * 0.1f + SmokeSoundVolume;
+            SmokeSound.volume = Mathf.Cos(Time.time*10f) * 0.01f + SmokeSoundVolume;
         }else{
             leftEffMain.startLifetime = 0f;
         }
@@ -90,13 +90,14 @@ public class CarController : MonoBehaviour
             steeringInput += Time.deltaTime * (wheelSteeringFactor + wheelAdaptativeSteeringFactor*Mathf.Abs((steeringInput - 1)/2));
             rightEffMain.startLifetime = smokeTime;
             SmokeSound.pitch = 0.925f;
-            SmokeSound.volume = Mathf.Cos(Time.time*10f) * 0.1f + SmokeSoundVolume;
+            SmokeSound.volume = Mathf.Cos(Time.time*10f) * 0.01f + SmokeSoundVolume;
         }else{
             rightEffMain.startLifetime = 0f;
         }
 
         if(!RIGHT && !LEFT) {
             steeringInput -= Time.deltaTime * Mathf.Sign(steeringInput) * resetWheelSteeringFactor;
+            SmokeSound.volume = Mathf.Lerp(SmokeSound.volume, SmokeSoundVolume * 0f, Time.deltaTime * 6);
         }
 
         steeringInput = Mathf.Clamp(steeringInput, -1, 1);
@@ -110,7 +111,6 @@ public class CarController : MonoBehaviour
 
         //Sonido
         EngineSound.pitch = 1 + ((carRigidbody2D.velocity.magnitude / MinMaxSpeed.y) * (1f + Mathf.Cos(Time.time*10) * 0.075f));
-        SmokeSound.volume = Mathf.Lerp(SmokeSound.volume, SmokeSoundVolume * 0f, Time.deltaTime * 6);
         
         if(pauseMenu.paused && Mathf.Abs(steeringInput) >= 1){ //unpause
             pauseMenu.paused = false;
