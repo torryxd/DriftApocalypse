@@ -5,60 +5,49 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public float spawnRadius = 10;
-    [Header("Flaco")][SerializeField]
-    private float FlacoSpawnQueue = 1;
+    [SerializeField]
+    private float spawnQueue = 1;
+    public float incrementSpawnQueue = 1f; //Valor con el que empieza el Increment
+    public float difficultyFactor = 0.99f; //Valor por el que se multiplica el increment por cada zombie matado
+    public float gordoChance = 0.2f;
     public GameObject zombieFlaco;
-    public float FlacoIncrementSpawnQueue = 1;
-
-    
-    [Header("Gordo")][SerializeField]
-    private float GordoSpawnQueue = 1;
     public GameObject zombieGordo;
-    public float GordoIncrementSpawnQueue = 1;
+
+    private float rnd;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Spawning();
     }
 
     // Update is called once per frame
-    void SpawningFlaco(){
-        int queue = Mathf.FloorToInt(FlacoSpawnQueue);
-        FlacoSpawnQueue -= (FlacoSpawnQueue - queue);
+    void Spawning(){
+        int queue = Mathf.FloorToInt(spawnQueue);
+        spawnQueue = (spawnQueue - queue);
 
         for(int i = 0; i < queue; i++){
-            Vector2 pos = RandomCircle(Vector2.zero, spawnRadius);
-            Instantiate(zombieFlaco, pos, zombieFlaco.transform.rotation);
+            rnd = Random.Range(0f, 1f);
+            if(rnd < gordoChance){
+                Instantiate(zombieGordo, RandomCircle(), zombieGordo.transform.rotation);
+            }else{
+                Instantiate(zombieFlaco, RandomCircle(), zombieFlaco.transform.rotation);
+            }
         }
     }
 
-    void SpawningGordo(){
-        int queue = Mathf.FloorToInt(FlacoSpawnQueue);
-        GordoSpawnQueue -= (GordoSpawnQueue - queue);
-
-        for(int i = 0; i < queue; i++){
-            Vector2 pos = RandomCircle(Vector2.zero, spawnRadius);
-            Instantiate(zombieGordo, pos, zombieGordo.transform.rotation);
-        }
-    }
-
-    Vector3 RandomCircle (Vector2 center, float radius){
-        float ang = Random.value * 360;
+    Vector2 RandomCircle (){
+        float ang = 360 * ((1 + Mathf.Sin(Time.time*200))/2);
         Vector2 pos;
-        pos.x = center.x + radius * Mathf.Sin(ang * Mathf.Deg2Rad);
-        pos.y = center.y + radius * Mathf.Cos(ang * Mathf.Deg2Rad);
+        pos.x = 0 + spawnRadius * Mathf.Sin(ang * Mathf.Deg2Rad);
+        pos.y = 0 + spawnRadius * Mathf.Cos(ang * Mathf.Deg2Rad);
         return pos;
     }
 
     public void IncreaseRate(string mobName){
-        if(mobName == "Flaco"){
-            FlacoSpawnQueue *= FlacoIncrementSpawnQueue;
-            SpawningFlaco();
-        }else if(mobName == "Gordo"){
-            GordoSpawnQueue *= GordoIncrementSpawnQueue;
-            SpawningGordo();
-        }
+        spawnQueue += incrementSpawnQueue;
+        incrementSpawnQueue *= difficultyFactor;
+        Spawning();
     }
 }

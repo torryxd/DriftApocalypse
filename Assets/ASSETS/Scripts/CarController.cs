@@ -97,7 +97,7 @@ public class CarController : MonoBehaviour
             }
         }else{
             if(!firstLEFT){
-                leftEffMain.startLifetime = 0f;
+                leftEffMain.startLifetime = 0.01f;
                 firstLEFT = true;
             }
         }
@@ -115,7 +115,7 @@ public class CarController : MonoBehaviour
             }
         }else{
             if(!firstRIGHT){
-                rightEffMain.startLifetime = 0f;
+                rightEffMain.startLifetime = 0.01f;
                 firstRIGHT = true;
             }
         }
@@ -181,16 +181,18 @@ public class CarController : MonoBehaviour
         carRigidbody2D.MoveRotation(rotationAngle);
     }
 
-    void OnTriggerEnter2D(Collider2D other){
-
-        if(other == FrontCollider){
-            Debug.Log("Front");
-        }else if(other == BackCollider){
-            Debug.Log("Back");
+    public void OnTriggerEnterChilds(Collider2D col, string colChild) {
+        if(col.transform.tag == "Enemy")
+        {
+            if(colChild == "BACK")
+            {
+                col.gameObject.GetComponent<zombieController>().die();
+            }
         }
 
-        if(other.gameObject.tag == "Enemy"){
-            other.gameObject.GetComponent<zombieController>().die();
+        if(colChild == "FRONT")
+        {
+            cam.Shake(0.1f, 0.125f, 100);
         }
     }
 }

@@ -183,5 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cc3c05ff320e549b0cff9be069d0f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mobName: Gordo
   moveForce: 1
   maxSpeed: 1

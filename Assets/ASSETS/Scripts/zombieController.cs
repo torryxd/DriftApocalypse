@@ -21,7 +21,7 @@ public class zombieController : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         rb2d = GetComponent<Rigidbody2D>();
 
-        maxSpeed -= Random.Range(0f, 0.5f);
+        maxSpeed = Random.Range(maxSpeed*0.9f, maxSpeed*1.1f);
     }
 
     // Update is called once per frame
@@ -29,10 +29,11 @@ public class zombieController : MonoBehaviour
     {
         if(!pauseMenu.paused){
             Vector2 v2 = car.transform.position - this.transform.position;
+
             rb2d.AddForce(v2.normalized * moveForce);
 
             if (rb2d.velocity.magnitude > maxSpeed) {
-                rb2d.velocity = Vector2.ClampMagnitude(rb2d.velocity, maxSpeed);
+                rb2d.velocity = Vector2.ClampMagnitude(rb2d.velocity, maxSpeed + v2.magnitude*0.1f);
             }
             
         }
