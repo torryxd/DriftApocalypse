@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class CarController : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class CarController : MonoBehaviour
     public float actualMaxSpeed = 2.5f;
     public Vector2 MinMaxSpeed;
     public float boostAcceleration = 1.35f;
+    public Vector3 originalScale;
 
     [Header("Car steering")]
     public float steeringSpeed = 250f;
@@ -32,6 +35,7 @@ public class CarController : MonoBehaviour
     public float steeringInput = 0;
     private float rotationAngle;
     private Vector2 rightVelocity;
+    private bool isDrifting;
 
     [Header("Components")]
     private Rigidbody2D carRigidbody2D;
@@ -45,6 +49,7 @@ public class CarController : MonoBehaviour
     private float GravelSoundVolume;
     public AudioSource SmokeSound;
     private float SmokeSoundVolume;
+    public TextMeshProUGUI txtSpeed;
     
     void Start() {
         carRigidbody2D = GetComponent<Rigidbody2D>();
@@ -55,12 +60,12 @@ public class CarController : MonoBehaviour
         defaultAccelerationFactor = accelerationFactor;
         GravelSoundVolume = GravelSound.volume;
         SmokeSoundVolume = SmokeSound.volume;
+        originalScale = this.transform.localScale;
         
     }
 
     bool firstLEFT, firstRIGHT, firstLEFTandRIGHT;
     void Update() {
-        
         //steeringInput = Input.GetAxis("Horizontal");
         bool LEFT = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || ButtonLeft.ispressed;
         bool RIGHT = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || ButtonRight.ispressed;
@@ -69,7 +74,7 @@ public class CarController : MonoBehaviour
             actualMaxSpeed = Mathf.Lerp(actualMaxSpeed, MinMaxSpeed.y, Time.deltaTime);
 
             if(firstLEFTandRIGHT){
-                this.transform.localScale = new Vector3(0.875f, 1.125f, 1);
+                this.transform.localScale = new Vector3(originalScale.x*0.875f, originalScale.y*1.125f, 1);
                 SmokeSound.pitch = 1f;
                 accelerationFactor = defaultAccelerationFactor * boostAcceleration;
                 SmokeSound.volume = SmokeSoundVolume*1.75F;
@@ -126,7 +131,7 @@ public class CarController : MonoBehaviour
         }
 
         steeringInput = Mathf.Clamp(steeringInput, -1, 1);
-        this.transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, Time.deltaTime * 2f);
+        this.transform.localScale = Vector3.Lerp(transform.localScale, originalScale, Time.deltaTime * 2f);
         
 
         //Girar ruedas
@@ -134,15 +139,18 @@ public class CarController : MonoBehaviour
         tyreLeft.transform.localEulerAngles = wheelRotation;
         tyreRight.transform.localEulerAngles = wheelRotation;
 
-        //Sonido
+        //Sonido motor
         EngineSound.pitch = 1 + ((carRigidbody2D.velocity.magnitude / MinMaxSpeed.y) * (1f + Mathf.Cos(Time.time*10) * 0.075f));
+        string str = Mathf.Round(carRigidbody2D.velocity.magnitude * 10f).ToString();
+        txtSpeed.text = str; txtSpeed.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = str;
         
         if(pauseMenu.paused && Mathf.Abs(steeringInput) >= 1){ //unpause
             pauseMenu.paused = false;
             pauseMenu.unPauseFirstPause();
         }
 
-        if(rightVelocity.magnitude/actualMaxSpeed > 0.5f || Mathf.Abs(steeringInput) > 0.75f){ //Drift factor / Trail renderers
+        isDrifting = rightVelocity.magnitude/actualMaxSpeed > 0.5f || Mathf.Abs(steeringInput) > 0.75f;
+        if(isDrifting){ //DERRAPANDO
             trailRenderers[0].emitting = true;
             trailRenderers[1].emitting = true;
             GravelSound.volume = GravelSoundVolume * ((rightVelocity.magnitude/actualMaxSpeed + Mathf.Abs(steeringInput))/2);
@@ -182,17 +190,18 @@ public class CarController : MonoBehaviour
     }
 
     public void OnTriggerEnterChilds(Collider2D col, string colChild) {
-        if(col.transform.tag == "Enemy")
+        if(col.transform.tag == "Enemy" && isDrifting)
         {
             if(colChild == "BACK")
             {
                 col.gameObject.GetComponent<zombieController>().die();
+                cam.Shake(0.1f, 0.1f, 40);
             }
         }
 
         if(colChild == "FRONT")
         {
-            cam.Shake(0.1f, 0.125f, 100);
+            cam.Shake(0.1f, 0.3f, 1000);
         }
     }
 }

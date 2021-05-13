@@ -13,32 +13,36 @@ public class GameManager : MonoBehaviour
     public GameObject zombieFlaco;
     public GameObject zombieGordo;
 
+    private float ang = 0;
+
     private float rnd;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        Spawning();
+        for(int i = 0; i <= 10; i++)
+            SpawningZombie();
     }
 
     // Update is called once per frame
-    void Spawning(){
+    void SpawningZombie(){
         int queue = Mathf.FloorToInt(spawnQueue);
         spawnQueue = (spawnQueue - queue);
 
-        for(int i = 0; i < queue; i++){
+        for(int i = 0; i < (queue + 1); i++){
             rnd = Random.Range(0f, 1f);
+            ang = (ang+5)%360;
             if(rnd < gordoChance){
                 Instantiate(zombieGordo, RandomCircle(), zombieGordo.transform.rotation);
             }else{
                 Instantiate(zombieFlaco, RandomCircle(), zombieFlaco.transform.rotation);
             }
         }
+        ang = (ang+10)%360;
     }
 
     Vector2 RandomCircle (){
-        float ang = 360 * ((1 + Mathf.Sin(Time.time*200))/2);
         Vector2 pos;
         pos.x = 0 + spawnRadius * Mathf.Sin(ang * Mathf.Deg2Rad);
         pos.y = 0 + spawnRadius * Mathf.Cos(ang * Mathf.Deg2Rad);
@@ -48,6 +52,6 @@ public class GameManager : MonoBehaviour
     public void IncreaseRate(string mobName){
         spawnQueue += incrementSpawnQueue;
         incrementSpawnQueue *= difficultyFactor;
-        Spawning();
+        SpawningZombie();
     }
 }

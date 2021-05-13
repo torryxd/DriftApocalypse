@@ -14,7 +14,6 @@ public class CamController : MonoBehaviour
     public float smoothOffsetSpeed = 5f;
     public float smoothRotationSpeed = 3f;
     public float smoothZoomSpeed = 5f;
-    public TextMeshProUGUI txtSpeed;
 
     private bool isShaking = false;
 	private float freezeMS = 50f;
@@ -40,8 +39,6 @@ public class CamController : MonoBehaviour
             return;
 
         Vector3 v3speed = new Vector3(car.GetComponent<Rigidbody2D>().velocity.x, car.GetComponent<Rigidbody2D>().velocity.y, 0);
-        string str = Mathf.Round(v3speed.magnitude * 10f).ToString();
-        txtSpeed.text = str; txtSpeed.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = str;
         
         //camera offset
         bool boosting = car.accelerationFactor != car.defaultAccelerationFactor;
