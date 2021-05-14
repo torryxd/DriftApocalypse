@@ -7,6 +7,9 @@ using TMPro;
 
 public class CarController : MonoBehaviour
 {
+    public float SCORE = 0;
+    public float COMBO = 1;
+
     [Header("Car engine")]
     public float accelerationFactor = 200f;
     public float defaultAccelerationFactor;
@@ -49,7 +52,8 @@ public class CarController : MonoBehaviour
     private float GravelSoundVolume;
     public AudioSource SmokeSound;
     private float SmokeSoundVolume;
-    public TextMeshProUGUI txtSpeed;
+    public TextMeshProUGUI txtScore;
+    public TextMeshProUGUI txtCombo;
     
     void Start() {
         carRigidbody2D = GetComponent<Rigidbody2D>();
@@ -142,15 +146,15 @@ public class CarController : MonoBehaviour
         //Sonido motor
         EngineSound.pitch = 1 + ((carRigidbody2D.velocity.magnitude / MinMaxSpeed.y) * (1f + Mathf.Cos(Time.time*10) * 0.075f));
         string str = Mathf.Round(carRigidbody2D.velocity.magnitude * 10f).ToString();
-        txtSpeed.text = str; txtSpeed.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = str;
         
         if(pauseMenu.paused && Mathf.Abs(steeringInput) >= 1){ //unpause
             pauseMenu.paused = false;
             pauseMenu.unPauseFirstPause();
         }
 
-        isDrifting = rightVelocity.magnitude/actualMaxSpeed > 0.5f || Mathf.Abs(steeringInput) > 0.75f;
-        if(isDrifting){ //DERRAPANDO
+        //DERRAPANDO
+        isDrifting = rightVelocity.magnitude/actualMaxSpeed > 0.4f || Mathf.Abs(steeringInput) > 0.8f;
+        if(isDrifting){ 
             trailRenderers[0].emitting = true;
             trailRenderers[1].emitting = true;
             GravelSound.volume = GravelSoundVolume * ((rightVelocity.magnitude/actualMaxSpeed + Mathf.Abs(steeringInput))/2);
@@ -159,6 +163,14 @@ public class CarController : MonoBehaviour
             trailRenderers[0].emitting = false;
             trailRenderers[1].emitting = false;
             GravelSound.volume = Mathf.Lerp(GravelSound.volume, GravelSoundVolume*0.2f, Time.deltaTime*8);
+        }
+
+        //Combo
+        if(COMBO > 1f)
+            COMBO -= Time.deltaTime * (isDrifting ? 0.25f : 5f);
+
+        if(COMBO > 0.75f){
+            txtCombo.text = "x" + Mathf.CeilToInt(COMBO); txtCombo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "x" + Mathf.CeilToInt(COMBO);
         }
     }
 
@@ -195,13 +207,29 @@ public class CarController : MonoBehaviour
             if(colChild == "BACK")
             {
                 col.gameObject.GetComponent<zombieController>().die();
-                cam.Shake(0.1f, 0.1f, 40);
+                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x)
+                    carRigidbody2D.velocity += rightVelocity.normalized * 0.125f;
+                cam.Shake(0.1f, 0.1f, 30);
+
+                SCORE += 1 * Mathf.Ceil(COMBO);
+                if(txtScore.gameObject.transform.localScale.magnitude < 4f)
+                    txtScore.gameObject.transform.localScale *= 1.2f;
+                txtScore.text = SCORE.ToString(); txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = SCORE.ToString();
+
+                if(COMBO < 9)
+                    COMBO += 1;
+                if(txtCombo.gameObject.transform.localScale.magnitude < 2.5f)
+                    txtCombo.gameObject.transform.localScale *= 1.3f;
             }
         }
 
         if(colChild == "FRONT")
         {
             cam.Shake(0.1f, 0.3f, 1000);
+
+            SCORE = 0;
+            COMBO += 1;
+            txtScore.text = "GAME OVER"; txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "GAME OVER";
         }
     }
 }

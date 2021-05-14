@@ -44,8 +44,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -75,8 +77,6 @@ ScriptsOnlyBuild:
     - Class: 50
       Script: {instanceID: 0}
     - Class: 58
-      Script: {instanceID: 0}
-    - Class: 61
       Script: {instanceID: 0}
     - Class: 62
       Script: {instanceID: 0}
@@ -634,7 +634,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: 07cb2db035cb667823d08aa68017b52f
+      Hash: 5fa187a8b1eaad482d36b57bebdda11a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CarController
@@ -1006,7 +1006,7 @@ ScriptsOnlyBuild:
     className: ObjectSpin
   - hash:
       serializedVersion: 2
-      Hash: e71d5303e944728f64797e3d8c4a7dd4
+      Hash: 6031b22cb4f13182ec7acedda24d8012
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TextMovement
@@ -1024,7 +1024,7 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
-      Hash: fe9732400ce1ed10f452a4b1284b1ece
+      Hash: a49c4b73d30298f95c62d961959ea895
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: zombieController

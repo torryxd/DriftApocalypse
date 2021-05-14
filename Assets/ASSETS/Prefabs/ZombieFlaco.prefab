@@ -185,4 +185,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mobName: Flaco
   moveForce: 3
-  maxSpeed: 1.25
+  defaultMaxSpeed: 0.4

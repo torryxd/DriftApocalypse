@@ -6,7 +6,8 @@ public class zombieController : MonoBehaviour
 {
     public string mobName = "Flaco";
     public float moveForce = 1;
-    public float maxSpeed = 1;
+    public float defaultMaxSpeed = 1;
+    private float maxSpeed = 1;
 
     private CarController car;
     private Rigidbody2D rb2d;
@@ -21,7 +22,7 @@ public class zombieController : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         rb2d = GetComponent<Rigidbody2D>();
 
-        maxSpeed = Random.Range(maxSpeed*0.9f, maxSpeed*1.1f);
+        defaultMaxSpeed = Random.Range(defaultMaxSpeed*0.8f, defaultMaxSpeed*1.2f);
     }
 
     // Update is called once per frame
@@ -32,7 +33,8 @@ public class zombieController : MonoBehaviour
 
             rb2d.AddForce(v2.normalized * moveForce);
 
-            if (rb2d.velocity.magnitude > maxSpeed && transform.position.magnitude < 9) {
+            maxSpeed = defaultMaxSpeed + Vector2.Distance(transform.position, car.transform.position) * 0.125f;
+            if (rb2d.velocity.magnitude > maxSpeed) {
                 rb2d.velocity = Vector2.ClampMagnitude(rb2d.velocity, maxSpeed);
             }
             

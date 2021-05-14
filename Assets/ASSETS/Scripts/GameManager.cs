@@ -21,8 +21,15 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i <= 10; i++)
+        for(int i = 0; i < 10; i++){
             SpawningZombie();
+            ang = (ang+10)%360;
+        }
+    }
+
+    void Update()
+    {
+        ang = (ang+(Time.deltaTime*30))%360;
     }
 
     // Update is called once per frame
@@ -32,14 +39,13 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < (queue + 1); i++){
             rnd = Random.Range(0f, 1f);
-            ang = (ang+5)%360;
             if(rnd < gordoChance){
                 Instantiate(zombieGordo, RandomCircle(), zombieGordo.transform.rotation);
             }else{
                 Instantiate(zombieFlaco, RandomCircle(), zombieFlaco.transform.rotation);
             }
+            ang = (ang+3)%360;
         }
-        ang = (ang+10)%360;
     }
 
     Vector2 RandomCircle (){

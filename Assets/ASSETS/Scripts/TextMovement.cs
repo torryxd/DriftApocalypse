@@ -8,6 +8,7 @@ public class TextMovement : MonoBehaviour
 	private Vector3 originalSize;
 	public float rotMove = 2.2f;
 	public float yMove = 0.0025f;
+	public float scaleRecoveryTime = 2.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,7 @@ public class TextMovement : MonoBehaviour
 			float wibblePos = Mathf.Cos(Time.time*1.85f)*yMove;
 			transform.position = new Vector3(transform.position.x,
 				transform.position.y + wibblePos, transform.position.z);
-			//transform.localScale = Vector3.Lerp(transform.localScale, originalSize, Time.deltaTime * 2.5f);
+			transform.localScale = Vector3.Lerp(transform.localScale, originalSize, Time.deltaTime * scaleRecoveryTime);
 		}
     }
 }
