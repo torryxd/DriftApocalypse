@@ -30,14 +30,18 @@ public class zombieController : MonoBehaviour
     {
         if(!pauseMenu.paused){
             Vector2 v2 = car.transform.position - this.transform.position;
+            float carDist = Vector2.Distance(transform.position, car.transform.position);
 
-            rb2d.AddForce(v2.normalized * moveForce);
-
-            maxSpeed = defaultMaxSpeed + Vector2.Distance(transform.position, car.transform.position) * 0.125f;
+            maxSpeed = defaultMaxSpeed + carDist * 0.125f;
+            if(carDist > 1.25f){
+                rb2d.AddForce(v2.normalized * moveForce);
+            }else{
+                rb2d.AddForce(v2.normalized * -moveForce/5);
+            }
+        
             if (rb2d.velocity.magnitude > maxSpeed) {
                 rb2d.velocity = Vector2.ClampMagnitude(rb2d.velocity, maxSpeed);
             }
-            
         }
     }
 
