@@ -8,6 +8,7 @@ public class zombieController : MonoBehaviour
     public float moveForce = 1;
     public float defaultMaxSpeed = 1;
     private float maxSpeed = 1;
+    private int comportamiento = 0; //1 Directo, 2 Esquivando, 3  4 Cobarde 
 
     private CarController car;
     private Rigidbody2D rb2d;
@@ -33,10 +34,10 @@ public class zombieController : MonoBehaviour
             float carDist = Vector2.Distance(transform.position, car.transform.position);
 
             maxSpeed = defaultMaxSpeed + carDist * 0.125f;
-            if(carDist > 1.25f){
+            if(carDist > 2f){
                 rb2d.AddForce(v2.normalized * moveForce);
             }else{
-                rb2d.AddForce(v2.normalized * -moveForce/5);
+                rb2d.AddForce(v2.normalized * -moveForce/10f);
             }
         
             if (rb2d.velocity.magnitude > maxSpeed) {

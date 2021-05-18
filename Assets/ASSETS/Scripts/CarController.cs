@@ -9,6 +9,7 @@ public class CarController : MonoBehaviour
 {
     public float SCORE = 0;
     public float COMBO = 1;
+    public float HEALTH = 100;
 
     [Header("Car engine")]
     public float accelerationFactor = 200f;
@@ -17,6 +18,8 @@ public class CarController : MonoBehaviour
     public Vector2 MinMaxSpeed;
     public float boostAcceleration = 1.35f;
     public Vector3 originalScale;
+    private float tailSpeed = 1;
+    private Vector3 previousTailPosition;
 
     [Header("Car steering")]
     public float steeringSpeed = 250f;
@@ -29,8 +32,10 @@ public class CarController : MonoBehaviour
     public float smokeTime = 2f;
     public GameObject LeftEffect;
     public GameObject RightEffect;
+    public GameObject EngineEffect;
     private ParticleSystem.MainModule leftEffMain;
     private ParticleSystem.MainModule rightEffMain;
+    private ParticleSystem engineEffectMain;
     private TrailRenderer[] trailRenderers;
     
     public eventButton ButtonLeft;
@@ -59,6 +64,8 @@ public class CarController : MonoBehaviour
         carRigidbody2D = GetComponent<Rigidbody2D>();
         leftEffMain = LeftEffect.GetComponent<ParticleSystem>().main;
         rightEffMain = RightEffect.GetComponent<ParticleSystem>().main;
+        engineEffectMain = EngineEffect.GetComponent<ParticleSystem>();
+        engineEffectMain.emissionRate = 0;
         trailRenderers = GetComponentsInChildren<TrailRenderer>();
 
         defaultAccelerationFactor = accelerationFactor;
@@ -143,14 +150,19 @@ public class CarController : MonoBehaviour
         tyreLeft.transform.localEulerAngles = wheelRotation;
         tyreRight.transform.localEulerAngles = wheelRotation;
 
-        //Sonido motor
-        EngineSound.pitch = 1 + ((carRigidbody2D.velocity.magnitude / MinMaxSpeed.y) * (1f + Mathf.Cos(Time.time*10) * 0.075f));
-        string str = Mathf.Round(carRigidbody2D.velocity.magnitude * 10f).ToString();
-        
         if(pauseMenu.paused && Mathf.Abs(steeringInput) >= 1){ //unpause
             pauseMenu.paused = false;
             pauseMenu.unPauseFirstPause();
         }
+        if(pauseMenu.paused)
+            return;
+
+        //Velocidad de cola
+        Vector3 v3TailSpeed = BackCollider.transform.position - previousTailPosition;
+        tailSpeed = v3TailSpeed.magnitude*50;
+        previousTailPosition = BackCollider.transform.position;
+        //Sonido motor
+        EngineSound.pitch = 1 + ((tailSpeed / MinMaxSpeed.y) * (1f + Mathf.Cos(Time.time*10) * 0.075f));
 
         //DERRAPANDO
         isDrifting = rightVelocity.magnitude/actualMaxSpeed > 0.4f || Mathf.Abs(steeringInput) > 0.8f;
@@ -167,10 +179,18 @@ public class CarController : MonoBehaviour
 
         //Combo
         if(COMBO > 1f)
-            COMBO -= Time.deltaTime * (isDrifting ? 0.25f : 5f);
-
+            COMBO -= Time.deltaTime * (isDrifting ? 0.1f : 2f); //Decrease derrapando
         if(COMBO > 0.75f){
             txtCombo.text = "x" + Mathf.CeilToInt(COMBO); txtCombo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "x" + Mathf.CeilToInt(COMBO);
+        }
+
+        //Health
+        if(HEALTH < 100){
+            engineEffectMain.emissionRate = Mathf.RoundToInt(100 - (HEALTH))/5;
+            HEALTH += Time.deltaTime * 7.5f;
+            Debug.Log(HEALTH);
+        }else{
+            HEALTH = 100;
         }
     }
 
@@ -183,6 +203,11 @@ public class CarController : MonoBehaviour
             float speedIncrement = (actualMaxSpeed - carRigidbody2D.velocity.magnitude)/actualMaxSpeed;
             Vector2 engineForceVector = transform.up * accelerationFactor * Time.fixedDeltaTime * (1+speedIncrement);
             carRigidbody2D.AddForce(engineForceVector, ForceMode2D.Force);
+
+            //Clamp Circle
+            if (transform.position.magnitude > 8) { 
+                carRigidbody2D.AddForce(-transform.position.normalized * (transform.position.magnitude - 8)*5, ForceMode2D.Force);
+            }
         }
         
         //Kill Orthogonal Velocity
@@ -190,11 +215,6 @@ public class CarController : MonoBehaviour
         rightVelocity = transform.right * Vector2.Dot(carRigidbody2D.velocity, transform.right);
         //Debug.Log(rightVelocity.magnitude/actualMaxSpeed);
         carRigidbody2D.velocity = forwardVelocity + rightVelocity * ((1-driftFactor) + driftFactor*(rightVelocity.magnitude/actualMaxSpeed));
-        
-        //Clamp Circle
-        if (transform.position.magnitude > 8) { 
-            carRigidbody2D.AddForce(-transform.position.normalized * (transform.position.magnitude - 8)*5, ForceMode2D.Force);
-        }
 
         //Apply rotation
         rotationAngle -= steeringInput * steeringSpeed * Time.fixedDeltaTime;
@@ -202,7 +222,7 @@ public class CarController : MonoBehaviour
     }
 
     public void OnTriggerEnterChilds(Collider2D col, string colChild) {
-        if(col.transform.tag == "Enemy" && isDrifting)
+        if(col.transform.CompareTag("Enemy") && isDrifting)
         {
             if(colChild == "BACK")
             {
@@ -225,11 +245,21 @@ public class CarController : MonoBehaviour
 
         if(colChild == "FRONT")
         {
-            cam.Shake(0.1f, 0.3f, 1000);
+            HEALTH -= 45;
+            if(HEALTH <= 0){ //DEAD
+                cam.Shake(0.1f, 0.3f, 1000);
+                death();
+            }else{ //LOOSE HP
+                cam.Shake(0.1f, 0.3f, 100);
 
-            SCORE = 0;
-            COMBO += 1;
-            txtScore.text = "GAME OVER"; txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "GAME OVER";
+            }
         }
+    }
+
+    public void death(){
+            SCORE = 0;
+            txtScore.text = "GAME OVER"; txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "GAME OVER";
+            
+            pauseMenu.Pause();
     }
 }
