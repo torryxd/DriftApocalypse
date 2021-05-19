@@ -162,7 +162,7 @@ public class CarController : MonoBehaviour
         tailSpeed = v3TailSpeed.magnitude*50;
         previousTailPosition = BackCollider.transform.position;
         //Sonido motor
-        EngineSound.pitch = 1 + ((tailSpeed / MinMaxSpeed.y) * (1f + Mathf.Cos(Time.time*10) * 0.075f));
+        EngineSound.pitch = 1 + ((carRigidbody2D.velocity.magnitude / MinMaxSpeed.y) * (1f + Mathf.Cos(Time.time*10) * 0.075f));
 
         //DERRAPANDO
         isDrifting = rightVelocity.magnitude/actualMaxSpeed > 0.4f || Mathf.Abs(steeringInput) > 0.8f;
@@ -186,7 +186,7 @@ public class CarController : MonoBehaviour
 
         //Health
         if(HEALTH < 100){
-            engineEffectMain.emissionRate = Mathf.RoundToInt(100 - (HEALTH))/5;
+            engineEffectMain.emissionRate = Mathf.RoundToInt(100 - (HEALTH))/2;
             HEALTH += Time.deltaTime * 7.5f;
             Debug.Log(HEALTH);
         }else{
@@ -199,7 +199,7 @@ public class CarController : MonoBehaviour
             return;
         
         //Create a force for the engine & limit max speed
-        if (carRigidbody2D.velocity.magnitude <= actualMaxSpeed) {
+        if (carRigidbody2D.velocity.magnitude <= actualMaxSpeed * (HEALTH < 20 ? 0.2f : HEALTH/100)) {
             float speedIncrement = (actualMaxSpeed - carRigidbody2D.velocity.magnitude)/actualMaxSpeed;
             Vector2 engineForceVector = transform.up * accelerationFactor * Time.fixedDeltaTime * (1+speedIncrement);
             carRigidbody2D.AddForce(engineForceVector, ForceMode2D.Force);
@@ -222,14 +222,10 @@ public class CarController : MonoBehaviour
     }
 
     public void OnTriggerEnterChilds(Collider2D col, string colChild) {
-        if(col.transform.CompareTag("Enemy") && isDrifting)
+        if(col.transform.CompareTag("Enemy"))
         {
-            if(colChild == "BACK")
-            {
+            void killZombie(){
                 col.gameObject.GetComponent<zombieController>().die();
-                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x)
-                    carRigidbody2D.velocity += rightVelocity.normalized * 0.125f;
-                cam.Shake(0.1f, 0.1f, 30);
 
                 SCORE += 1 * Mathf.Ceil(COMBO);
                 if(txtScore.gameObject.transform.localScale.magnitude < 4f)
@@ -241,25 +237,43 @@ public class CarController : MonoBehaviour
                 if(txtCombo.gameObject.transform.localScale.magnitude < 2.5f)
                     txtCombo.gameObject.transform.localScale *= 1.3f;
             }
+
+            if(colChild == "BACK" && isDrifting)
+            {
+                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x)
+                    carRigidbody2D.velocity += rightVelocity.normalized * 0.125f;
+                cam.Shake(0.1f, 0.1f, 30);
+
+                killZombie();
+            }
+            if(colChild == "FRONT")
+            {
+                HEALTH -= 45;
+                hit();
+                killZombie();
+            }
         }
-
-        if(colChild == "FRONT")
+        else
         {
-            HEALTH -= 45;
-            if(HEALTH <= 0){ //DEAD
-                cam.Shake(0.1f, 0.3f, 1000);
-                death();
-            }else{ //LOOSE HP
-                cam.Shake(0.1f, 0.3f, 100);
-
+            if(colChild == "FRONT")
+            {
+                HEALTH -= 45;
+                hit();
             }
         }
     }
 
-    public void death(){
-            SCORE = 0;
-            txtScore.text = "GAME OVER"; txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "GAME OVER";
-            
-            pauseMenu.Pause();
+    public void hit(){
+            if(HEALTH <= 0){ //DEAD
+                cam.Shake(0.1f, 0.3f, 1000);
+
+                SCORE = 0;
+                txtScore.text = "GAME OVER"; txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "GAME OVER";
+                pauseMenu.Pause();
+
+            }else{ //LOOSE HP
+                cam.Shake(0.1f, 0.3f, 100);
+            }
+
     }
 }
