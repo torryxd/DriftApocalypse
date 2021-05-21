@@ -52,6 +52,7 @@
      <Compile Include="Assets\ASSETS\Scripts\CamController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
      <Compile Include="Assets\ASSETS\Scripts\EscenarioController.cs" />
+     <Compile Include="Assets\destroyInSeconds.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
@@ -75,7 +76,7 @@
      <Compile Include="Assets\ASSETS\Scripts\lookAtCamera.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
-     <Compile Include="Assets\TriggerDetector.cs" />
+     <Compile Include="Assets\ASSETS\Scripts\TriggerDetector.cs" />
      <Compile Include="Assets\Wolv Interactive\Pixel Perfect Retro Camera\Scenes\Example\MoveCamera.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
@@ -85,7 +86,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
      <Compile Include="Assets\ASSETS\Scripts\TextMovement.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
-     <Compile Include="Assets\ASSETS\Scripts\zombieController.cs" />
+     <Compile Include="Assets\ASSETS\Scripts\zombieFlacoController.cs" />
      <Compile Include="Assets\Wolv Interactive\Pixel Perfect Retro Camera\Scenes\Example\Spin.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />

@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         return pos;
     }
 
-    public void IncreaseRate(string mobName){
+    public void IncreaseRate(){
         spawnQueue += incrementSpawnQueue;
         incrementSpawnQueue *= difficultyFactor;
         SpawningZombie();

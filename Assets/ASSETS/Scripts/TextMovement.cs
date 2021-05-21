@@ -9,6 +9,7 @@ public class TextMovement : MonoBehaviour
 	public float rotMove = 2.2f;
 	public float yMove = 0.0025f;
 	public float scaleRecoveryTime = 2.5f;
+	public bool moveOnPause = false;
 
 	private float offSetTime;
 
@@ -23,15 +24,15 @@ public class TextMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.timeScale > 0){
-			float wibbleRot = Mathf.Cos((Time.time+offSetTime)*2.5f)*rotMove;
+        if(Time.timeScale > 0 || moveOnPause){
+			float wibbleRot = Mathf.Cos((Time.unscaledTime+offSetTime)*2.5f)*rotMove;
 			//if(wibbleRot < 0) wibbleRot = 360-wibbleRot;
 			transform.localEulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y,
 			0 + wibbleRot);
-			float wibblePos = Mathf.Cos((Time.time+offSetTime)*1.85f)*yMove;
+			float wibblePos = Mathf.Cos((Time.unscaledTime+offSetTime)*1.85f)*yMove;
 			transform.position = new Vector3(transform.position.x,
 				transform.position.y + wibblePos, transform.position.z);
-			transform.localScale = Vector3.Lerp(transform.localScale, originalSize, Time.deltaTime * scaleRecoveryTime);
+			transform.localScale = Vector3.Lerp(transform.localScale, originalSize, Time.unscaledDeltaTime * scaleRecoveryTime);
 		}
     }
 }

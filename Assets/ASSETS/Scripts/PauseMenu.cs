@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public bool firstTimePause = true;
     public GameObject PauseButton;
     public GameObject pauseLayer;
+    public GameObject gameOverLayer;
 
     public GameObject LeftArrow;
     private Vector3 leftArrowScale;
@@ -66,5 +67,10 @@ public class PauseMenu : MonoBehaviour
     public void loadScene(string sceneName){
         Time.timeScale = 1;
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void showGameOver(){
+        Time.timeScale = 0;
+        gameOverLayer.SetActive(true);
     }
 }

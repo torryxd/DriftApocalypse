@@ -13,10 +13,11 @@ ScriptsOnlyBuild:
     - SpriteShadow
     - TextMovement
     - TriggerDetector
+    - destroyInSeconds
     - eventButton
     - interactionButton
     - lookAtCamera
-    - zombieController
+    - zombieFlacoController
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
@@ -44,10 +45,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -78,6 +77,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 58
       Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
     - Class: 62
       Script: {instanceID: 0}
     - Class: 70
@@ -101,49 +102,51 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1462}
     - Class: 114
-      Script: {instanceID: 1754}
+      Script: {instanceID: 1574}
     - Class: 114
-      Script: {instanceID: 1970}
+      Script: {instanceID: 1790}
     - Class: 114
-      Script: {instanceID: 2194}
+      Script: {instanceID: 2014}
     - Class: 114
-      Script: {instanceID: 2664}
+      Script: {instanceID: 2484}
     - Class: 114
-      Script: {instanceID: 2814}
+      Script: {instanceID: 2634}
     - Class: 114
-      Script: {instanceID: 2820}
+      Script: {instanceID: 2640}
     - Class: 114
-      Script: {instanceID: 2858}
+      Script: {instanceID: 2678}
     - Class: 114
-      Script: {instanceID: 2860}
+      Script: {instanceID: 2680}
     - Class: 114
-      Script: {instanceID: 2990}
+      Script: {instanceID: 2810}
     - Class: 114
-      Script: {instanceID: 3014}
+      Script: {instanceID: 2834}
     - Class: 114
-      Script: {instanceID: 3150}
+      Script: {instanceID: 2970}
     - Class: 114
-      Script: {instanceID: 3206}
+      Script: {instanceID: 3026}
     - Class: 114
-      Script: {instanceID: 3318}
+      Script: {instanceID: 3138}
     - Class: 114
-      Script: {instanceID: 3622}
+      Script: {instanceID: 3442}
     - Class: 114
-      Script: {instanceID: 4002}
+      Script: {instanceID: 3822}
     - Class: 114
-      Script: {instanceID: 4158}
+      Script: {instanceID: 3980}
     - Class: 114
-      Script: {instanceID: 4798}
+      Script: {instanceID: 4620}
     - Class: 114
-      Script: {instanceID: 4816}
+      Script: {instanceID: 4638}
     - Class: 114
-      Script: {instanceID: 4866}
+      Script: {instanceID: 4688}
     - Class: 114
-      Script: {instanceID: 4940}
+      Script: {instanceID: 4762}
     - Class: 114
-      Script: {instanceID: 5092}
+      Script: {instanceID: 4914}
     - Class: 114
-      Script: {instanceID: 5210}
+      Script: {instanceID: 5032}
+    - Class: 114
+      Script: {instanceID: 84598}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -188,37 +191,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1462}
     - Class: 114
-      Script: {instanceID: 1970}
+      Script: {instanceID: 1790}
     - Class: 114
-      Script: {instanceID: 2194}
+      Script: {instanceID: 2014}
     - Class: 114
-      Script: {instanceID: 2284}
+      Script: {instanceID: 2104}
     - Class: 114
-      Script: {instanceID: 2664}
+      Script: {instanceID: 2484}
     - Class: 114
-      Script: {instanceID: 2820}
+      Script: {instanceID: 2640}
     - Class: 114
-      Script: {instanceID: 2860}
+      Script: {instanceID: 2680}
     - Class: 114
-      Script: {instanceID: 2990}
+      Script: {instanceID: 2810}
     - Class: 114
-      Script: {instanceID: 3206}
+      Script: {instanceID: 3026}
     - Class: 114
-      Script: {instanceID: 3318}
+      Script: {instanceID: 3138}
     - Class: 114
-      Script: {instanceID: 4002}
+      Script: {instanceID: 3822}
     - Class: 114
-      Script: {instanceID: 4042}
+      Script: {instanceID: 3862}
     - Class: 114
-      Script: {instanceID: 4354}
+      Script: {instanceID: 4176}
     - Class: 114
-      Script: {instanceID: 4472}
+      Script: {instanceID: 4294}
     - Class: 114
-      Script: {instanceID: 4798}
+      Script: {instanceID: 4620}
     - Class: 114
-      Script: {instanceID: 4808}
+      Script: {instanceID: 4630}
     - Class: 114
-      Script: {instanceID: 5092}
+      Script: {instanceID: 4914}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -472,7 +475,7 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: 08c8ab7ee577e272e30f396412253958
+      Hash: 98dc50364aed0d91291eef4997bebb98
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PauseMenu
@@ -634,7 +637,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: 5fa187a8b1eaad482d36b57bebdda11a
+      Hash: 824cf89012114d060bb32c872d98b9ae
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CarController
@@ -1006,7 +1009,7 @@ ScriptsOnlyBuild:
     className: ObjectSpin
   - hash:
       serializedVersion: 2
-      Hash: 6031b22cb4f13182ec7acedda24d8012
+      Hash: 76053a66d69f74ef82c31b28ae2e8474
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TextMovement
@@ -1024,10 +1027,10 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
-      Hash: a49c4b73d30298f95c62d961959ea895
+      Hash: 8bad8928840fdd17ccbfb7fad35214cf
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: zombieController
+    className: zombieFlacoController
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1070,8 +1073,14 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: TMPro.Examples
     className: TMP_TextEventCheck
+  - hash:
+      serializedVersion: 2
+      Hash: 194a53724f7db9a4f28ac7c7db09dc61
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: destroyInSeconds
   platform: 5
   scenePathNames:
   - Assets/ASSETS/Scenes/MainMenu.unity
   - Assets/ASSETS/Scenes/GameScene.unity
-  playerPath: C:/Users/Torry/Dropbox/RUSHCKET - DOWNLOAD/DriftOverZombies/DriftOverZombies.exe
+  playerPath: C:/Users/Torry/Dropbox/RUSHCKET - DOWNLOAD/DriftApocalypse/Drift Apocalypse.exe

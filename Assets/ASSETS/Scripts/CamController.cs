@@ -46,10 +46,10 @@ public class CamController : MonoBehaviour
             car.transform.position.x + (v3speed.x * (boosting ? 0.525f : 0.5f)) + (car.transform.up.normalized.x * 0.4f),
             car.transform.position.y + (v3speed.y * (boosting ? 0.525f : 0.5f)) + (car.transform.up.normalized.y * 0.4f),
             this.transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothOffsetSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothOffsetSpeed * Time.unscaledDeltaTime);
         
         //camera zoom
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, defaultCamSize - defaultCamSize*0.275f * ((v3speed.magnitude - car.actualMaxSpeed)/-car.actualMaxSpeed), smoothZoomSpeed * Time.deltaTime);
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, defaultCamSize - defaultCamSize*0.275f * ((v3speed.magnitude - car.MinMaxSpeed.y)/-car.MinMaxSpeed.y), smoothZoomSpeed * Time.unscaledDeltaTime);
         
         //camera rotation
         if(gs.mobileCam){
@@ -58,7 +58,7 @@ public class CamController : MonoBehaviour
             Vector3 desiredRotation = new Vector3(
                 transform.eulerAngles.x,
                 transform.eulerAngles.y,
-                Mathf.LerpAngle(transform.eulerAngles.z, speedAngle, Time.deltaTime * smoothRotationSpeed)
+                Mathf.LerpAngle(transform.eulerAngles.z, speedAngle, Time.unscaledDeltaTime * smoothRotationSpeed)
                 );
             transform.eulerAngles  = desiredRotation;
             

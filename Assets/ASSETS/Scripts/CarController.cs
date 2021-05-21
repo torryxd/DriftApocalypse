@@ -9,17 +9,17 @@ public class CarController : MonoBehaviour
 {
     public float SCORE = 0;
     public float COMBO = 1;
-    public float HEALTH = 100;
+    public float HEALTH = 1; //MaxSpeed
 
     [Header("Car engine")]
     public float accelerationFactor = 200f;
     public float defaultAccelerationFactor;
-    public float actualMaxSpeed = 2.5f;
     public Vector2 MinMaxSpeed;
     public float boostAcceleration = 1.35f;
     public Vector3 originalScale;
     private float tailSpeed = 1;
     private Vector3 previousTailPosition;
+    private float justHitted = 0;
 
     [Header("Car steering")]
     public float steeringSpeed = 250f;
@@ -44,6 +44,8 @@ public class CarController : MonoBehaviour
     private float rotationAngle;
     private Vector2 rightVelocity;
     private bool isDrifting;
+
+    public GameObject crashEffect;
 
     [Header("Components")]
     private Rigidbody2D carRigidbody2D;
@@ -72,7 +74,6 @@ public class CarController : MonoBehaviour
         GravelSoundVolume = GravelSound.volume;
         SmokeSoundVolume = SmokeSound.volume;
         originalScale = this.transform.localScale;
-        
     }
 
     bool firstLEFT, firstRIGHT, firstLEFTandRIGHT;
@@ -82,7 +83,8 @@ public class CarController : MonoBehaviour
         bool RIGHT = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || ButtonRight.ispressed;
         
         if(RIGHT && LEFT) {
-            actualMaxSpeed = Mathf.Lerp(actualMaxSpeed, MinMaxSpeed.y, Time.deltaTime);
+            if(HEALTH >= MinMaxSpeed.x)
+                HEALTH = Mathf.Lerp(HEALTH, MinMaxSpeed.y, Time.deltaTime);
 
             if(firstLEFTandRIGHT){
                 this.transform.localScale = new Vector3(originalScale.x*0.875f, originalScale.y*1.125f, 1);
@@ -92,7 +94,8 @@ public class CarController : MonoBehaviour
                 firstLEFTandRIGHT = false;
             }
         }else{
-            actualMaxSpeed = Mathf.Lerp(actualMaxSpeed, MinMaxSpeed.x, Time.deltaTime*3);
+            if(HEALTH >= MinMaxSpeed.x)
+                HEALTH = Mathf.Lerp(HEALTH, MinMaxSpeed.x, Time.deltaTime*3);
 
             if(!firstLEFTandRIGHT){
                 accelerationFactor = defaultAccelerationFactor;
@@ -165,11 +168,11 @@ public class CarController : MonoBehaviour
         EngineSound.pitch = 1 + ((carRigidbody2D.velocity.magnitude / MinMaxSpeed.y) * (1f + Mathf.Cos(Time.time*10) * 0.075f));
 
         //DERRAPANDO
-        isDrifting = rightVelocity.magnitude/actualMaxSpeed > 0.4f || Mathf.Abs(steeringInput) > 0.8f;
-        if(isDrifting){ 
+        isDrifting = rightVelocity.magnitude/carRigidbody2D.velocity.magnitude > 0.6f /*|| Mathf.Abs(steeringInput) > 0.8f*/;
+        if(isDrifting){
             trailRenderers[0].emitting = true;
             trailRenderers[1].emitting = true;
-            GravelSound.volume = GravelSoundVolume * ((rightVelocity.magnitude/actualMaxSpeed + Mathf.Abs(steeringInput))/2);
+            GravelSound.volume = GravelSoundVolume * (rightVelocity.magnitude/carRigidbody2D.velocity.magnitude);
             GravelSound.pitch = 0.7f + Mathf.Cos(Time.time*5)*0.05f;
         }else{
             trailRenderers[0].emitting = false;
@@ -179,19 +182,18 @@ public class CarController : MonoBehaviour
 
         //Combo
         if(COMBO > 1f)
-            COMBO -= Time.deltaTime * (isDrifting ? 0.1f : 2f); //Decrease derrapando
+            COMBO -= Time.deltaTime * (isDrifting ? 0.2f : 4f); //Decrease derrapando
         if(COMBO > 0.75f){
             txtCombo.text = "x" + Mathf.CeilToInt(COMBO); txtCombo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "x" + Mathf.CeilToInt(COMBO);
         }
 
         //Health
-        if(HEALTH < 100){
-            engineEffectMain.emissionRate = Mathf.RoundToInt(100 - (HEALTH))/2;
-            HEALTH += Time.deltaTime * 7.5f;
-            Debug.Log(HEALTH);
-        }else{
-            HEALTH = 100;
+        if(HEALTH < MinMaxSpeed.x){
+            engineEffectMain.emissionRate = Mathf.RoundToInt((MinMaxSpeed.x - (HEALTH))*20);
+            HEALTH += Time.deltaTime*0.15f; //Health regen rate
         }
+        if(justHitted > 0)
+            justHitted -= Time.deltaTime;
     }
 
     void FixedUpdate() {
@@ -199,8 +201,8 @@ public class CarController : MonoBehaviour
             return;
         
         //Create a force for the engine & limit max speed
-        if (carRigidbody2D.velocity.magnitude <= actualMaxSpeed * (HEALTH < 20 ? 0.2f : HEALTH/100)) {
-            float speedIncrement = (actualMaxSpeed - carRigidbody2D.velocity.magnitude)/actualMaxSpeed;
+        if (carRigidbody2D.velocity.magnitude <= (HEALTH > 1.5f ? HEALTH : 1.5f)) {
+            float speedIncrement = (HEALTH - carRigidbody2D.velocity.magnitude)/HEALTH; //Increment inertia if going fast
             Vector2 engineForceVector = transform.up * accelerationFactor * Time.fixedDeltaTime * (1+speedIncrement);
             carRigidbody2D.AddForce(engineForceVector, ForceMode2D.Force);
 
@@ -208,13 +210,15 @@ public class CarController : MonoBehaviour
             if (transform.position.magnitude > 8) { 
                 carRigidbody2D.AddForce(-transform.position.normalized * (transform.position.magnitude - 8)*5, ForceMode2D.Force);
             }
+        }else{
+            carRigidbody2D.velocity = carRigidbody2D.velocity.normalized * HEALTH;
         }
         
         //Kill Orthogonal Velocity
         Vector2 forwardVelocity = transform.up * Vector2.Dot(carRigidbody2D.velocity, transform.up);
         rightVelocity = transform.right * Vector2.Dot(carRigidbody2D.velocity, transform.right);
-        //Debug.Log(rightVelocity.magnitude/actualMaxSpeed);
-        carRigidbody2D.velocity = forwardVelocity + rightVelocity * ((1-driftFactor) + driftFactor*(rightVelocity.magnitude/actualMaxSpeed));
+        //Debug.Log(rightVelocity.magnitude/carRigidbody2D.velocity.magnitude);
+        carRigidbody2D.velocity = forwardVelocity + rightVelocity * ((1-driftFactor) + driftFactor*(rightVelocity.magnitude/HEALTH));
 
         //Apply rotation
         rotationAngle -= steeringInput * steeringSpeed * Time.fixedDeltaTime;
@@ -224,8 +228,13 @@ public class CarController : MonoBehaviour
     public void OnTriggerEnterChilds(Collider2D col, string colChild) {
         if(col.transform.CompareTag("Enemy"))
         {
-            void killZombie(){
-                col.gameObject.GetComponent<zombieController>().die();
+            if(colChild == "BACK" && isDrifting)
+            {
+                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x)
+                    carRigidbody2D.velocity += rightVelocity.normalized * 0.125f;
+                cam.Shake(0.1f, 0.1f, 30);
+
+                col.gameObject.GetComponent<zombieFlacoController>().die();
 
                 SCORE += 1 * Mathf.Ceil(COMBO);
                 if(txtScore.gameObject.transform.localScale.magnitude < 4f)
@@ -237,43 +246,33 @@ public class CarController : MonoBehaviour
                 if(txtCombo.gameObject.transform.localScale.magnitude < 2.5f)
                     txtCombo.gameObject.transform.localScale *= 1.3f;
             }
-
-            if(colChild == "BACK" && isDrifting)
-            {
-                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x)
-                    carRigidbody2D.velocity += rightVelocity.normalized * 0.125f;
-                cam.Shake(0.1f, 0.1f, 30);
-
-                killZombie();
-            }
-            if(colChild == "FRONT")
-            {
-                HEALTH -= 45;
-                hit();
-                killZombie();
-            }
-        }
-        else
-        {
-            if(colChild == "FRONT")
-            {
-                HEALTH -= 45;
-                hit();
-            }
         }
     }
+    
+    public void OnCollisionEnter2D(Collision2D col) {
+        if (col.contacts[0].otherCollider.transform.gameObject.name != transform.gameObject.name) //Check if local hitbox
+            return;
 
-    public void hit(){
+        float colForce = Vector2.Dot(col.relativeVelocity.normalized, -transform.up);
+        
+        if(colForce > 0.9f && justHitted <= 0){
+            if(col.transform.CompareTag("Enemy"))
+                col.gameObject.GetComponent<zombieFlacoController>().die();
+
+            HEALTH -= (colForce - 0.8f)*12f;
+            Instantiate(crashEffect, transform.position, crashEffect.transform.rotation);
+            justHitted = 1;
+
             if(HEALTH <= 0){ //DEAD
-                cam.Shake(0.1f, 0.3f, 1000);
+                HEALTH = 0;
 
-                SCORE = 0;
-                txtScore.text = "GAME OVER"; txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "GAME OVER";
-                pauseMenu.Pause();
+                pauseMenu.showGameOver();
+                Time.timeScale = 0;
+                cam.Shake(0.1f, 0.3f);
 
             }else{ //LOOSE HP
                 cam.Shake(0.1f, 0.3f, 100);
             }
-
+        }
     }
 }
