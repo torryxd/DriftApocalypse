@@ -226,13 +226,12 @@ public class CarController : MonoBehaviour
     }
 
     public void OnTriggerEnterChilds(Collider2D col, string colChild) {
-        if(col.transform.CompareTag("Enemy"))
+        if(colChild == "BACK" && isDrifting)
         {
-            if(colChild == "BACK" && isDrifting)
-            {
+            cam.Shake(0.1f, 0.1f, 30);
+            if(col.transform.CompareTag("Enemy")) {
                 if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x)
                     carRigidbody2D.velocity += rightVelocity.normalized * 0.125f;
-                cam.Shake(0.1f, 0.1f, 30);
 
                 col.gameObject.GetComponent<zombieFlacoController>().die();
 
@@ -245,7 +244,10 @@ public class CarController : MonoBehaviour
                     COMBO += 1;
                 if(txtCombo.gameObject.transform.localScale.magnitude < 2.5f)
                     txtCombo.gameObject.transform.localScale *= 1.3f;
+            }else if(col.transform.CompareTag("Cacti")){
+                col.gameObject.GetComponent<CactusController>().cut();
             }
+            
         }
     }
     
@@ -258,6 +260,8 @@ public class CarController : MonoBehaviour
         if(colForce > 0.9f && justHitted <= 0){
             if(col.transform.CompareTag("Enemy"))
                 col.gameObject.GetComponent<zombieFlacoController>().die();
+            else if(col.transform.CompareTag("Cacti"))
+                col.gameObject.GetComponent<CactusController>().cut();
 
             HEALTH -= (colForce - 0.8f)*12f;
             Instantiate(crashEffect, transform.position, crashEffect.transform.rotation);

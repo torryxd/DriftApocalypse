@@ -52,7 +52,7 @@
      <Compile Include="Assets\ASSETS\Scripts\CamController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
      <Compile Include="Assets\ASSETS\Scripts\EscenarioController.cs" />
-     <Compile Include="Assets\destroyInSeconds.cs" />
+     <Compile Include="Assets\ASSETS\Scripts\destroyInSeconds.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
