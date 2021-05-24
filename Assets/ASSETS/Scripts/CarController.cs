@@ -50,6 +50,7 @@ public class CarController : MonoBehaviour
 
     [Header("Components")]
     private Rigidbody2D carRigidbody2D;
+    private GlobalSettings gs;
     public CamController cam;
     public PauseMenu pauseMenu;
     public GameObject EndPoint;
@@ -70,11 +71,13 @@ public class CarController : MonoBehaviour
         engineEffectMain = EngineEffect.GetComponent<ParticleSystem>();
         engineEffectMain.emissionRate = 0;
         trailRenderers = GetComponentsInChildren<TrailRenderer>();
+        gs = FindObjectOfType<GlobalSettings>();
 
         defaultAccelerationFactor = accelerationFactor;
         GravelSoundVolume = GravelSound.volume;
         SmokeSoundVolume = SmokeSound.volume;
         originalScale = this.transform.localScale;
+        txtScore.text = gs.hiScore.ToString(); txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gs.hiScore.ToString();
     }
 
     bool firstLEFT, firstRIGHT, firstLEFTandRIGHT;
@@ -231,24 +234,16 @@ public class CarController : MonoBehaviour
     }
 
     public void OnTriggerEnterChilds(Collider2D col, string colChild) {
-        if(colChild == "BACK" && isDrifting)
+        if(colChild == "BACK" && isDrifting && !col.transform.CompareTag("Smoke"))
         {
-            cam.Shake(0.1f, 0.1f, 30);
+            cam.Shake(0.1f, 0.1f, 50);
             if(col.transform.CompareTag("Enemy")) {
                 if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x && HEALTH < MinMaxSpeed.x)
                     carRigidbody2D.velocity += rightVelocity.normalized * 0.125f;
 
                 col.gameObject.GetComponent<zombieFlacoController>().die();
 
-                SCORE += 1 * Mathf.Ceil(COMBO);
-                if(txtScore.gameObject.transform.localScale.magnitude < 4f)
-                    txtScore.gameObject.transform.localScale *= 1.2f;
-                txtScore.text = SCORE.ToString(); txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = SCORE.ToString();
-
-                if(COMBO < 9)
-                    COMBO += 1;
-                if(txtCombo.gameObject.transform.localScale.magnitude < 2.5f)
-                    txtCombo.gameObject.transform.localScale *= 1.3f;
+                writeScore();
             }else if(col.transform.CompareTag("Cacti")){
                 col.gameObject.GetComponent<CactusController>().cut();
             }
@@ -277,11 +272,41 @@ public class CarController : MonoBehaviour
 
                 pauseMenu.showGameOver();
                 Time.timeScale = 0;
-                cam.Shake(0.1f, 0.3f);
+                cam.Shake(0.2f, 0.5f);
 
             }else{ //LOOSE HP
-                cam.Shake(0.1f, 0.3f, 100);
+                cam.Shake(0.15f, 0.3f, 100);
             }
         }
+    }
+
+    public void OnTriggerStay2D(Collider2D col){
+        if(col.transform.CompareTag("Smoke")){
+            if(HEALTH > 0.5f){
+                HEALTH -= Time.deltaTime * 0.4f;
+                inCombat = 0;
+                //cam.Shake(0.01f, 0.01f);
+            }
+        }
+    }
+
+    void writeScore(){
+        string scoreStr;
+        SCORE += 1 * Mathf.Ceil(COMBO);
+        if(txtScore.gameObject.transform.localScale.magnitude < 4f)
+            txtScore.gameObject.transform.localScale *= 1.2f;
+
+        if(SCORE < gs.hiScore){
+            scoreStr = (Mathf.Abs(SCORE - gs.hiScore)).ToString();
+        }else{
+            scoreStr = "+ " + SCORE.ToString() + " +";
+            gs.SaveScore((int)SCORE);
+        }
+        txtScore.text = scoreStr; txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = scoreStr;
+
+        if(COMBO < 9)
+            COMBO += 1;
+        if(txtCombo.gameObject.transform.localScale.magnitude < 2.5f)
+            txtCombo.gameObject.transform.localScale *= 1.3f;
     }
 }

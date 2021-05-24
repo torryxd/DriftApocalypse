@@ -6426,7 +6426,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.25}
-  m_Size: {x: 0.4, y: 0.6}
+  m_Size: {x: 0.4, y: 0.65}
   m_Direction: 0
 --- !u!82 &676938723
 AudioSource:
@@ -6890,7 +6890,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: eb57a935a14990a43b8ba9784f971e62, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11768,7 +11768,7 @@ MonoBehaviour:
   accelerationFactor: 95
   defaultAccelerationFactor: 0
   MinMaxSpeed: {x: 2.5, y: 3.5}
-  boostAcceleration: 1.4
+  boostAcceleration: 1.5
   originalScale: {x: 0, y: 0, z: 0}
   steeringSpeed: 220
   wheelSteeringFactor: 1
@@ -13503,6 +13503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mobileCam: 0
   pixelEffect: 0
+  hiScore: 0
 --- !u!4 &1285640879
 Transform:
   m_ObjectHideFlags: 0

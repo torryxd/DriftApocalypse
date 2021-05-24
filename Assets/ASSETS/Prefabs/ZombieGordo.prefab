@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 6394406216240132955}
   - component: {fileID: 6394406216240132953}
   - component: {fileID: 6394406216240132952}
+  - component: {fileID: -8731758494800414506}
   m_Layer: 0
   m_Name: ZombieGordo
   m_TagString: Enemy
@@ -233,5 +234,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveForce: 0.13
   defaultMaxSpeed: 0.2
+  comportamiento: 0
   squishEffect: {fileID: 5044525961171234257, guid: 52e2220c25a45d54ebe66fcae5cee7de, type: 3}
   spr: {fileID: 6394406216240132949}
+--- !u!114 &-8731758494800414506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6394406216240132951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2d4f0636fccbae4a9f294c193ebdf37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  humo: {fileID: 5715522539729948978, guid: d410bf4771627c04fa0ebe5c7633a368, type: 3}
+  tiempoEntreHumo: 10

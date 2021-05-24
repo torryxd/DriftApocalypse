@@ -232,6 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveForce: 0.3
-  defaultMaxSpeed: 0.6
+  defaultMaxSpeed: 0.7
+  comportamiento: 0
   squishEffect: {fileID: 5044525961171234257, guid: 52e2220c25a45d54ebe66fcae5cee7de, type: 3}
   spr: {fileID: 7251121144528731747}
