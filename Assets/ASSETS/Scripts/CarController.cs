@@ -20,6 +20,7 @@ public class CarController : MonoBehaviour
     private float tailSpeed = 1;
     private Vector3 previousTailPosition;
     private float justHitted = 0;
+    private float inCombat = 0;
 
     [Header("Car steering")]
     public float steeringSpeed = 250f;
@@ -190,10 +191,14 @@ public class CarController : MonoBehaviour
         //Health
         if(HEALTH < MinMaxSpeed.x){
             engineEffectMain.emissionRate = Mathf.RoundToInt((MinMaxSpeed.x - (HEALTH))*20);
-            HEALTH += Time.deltaTime*0.15f; //Health regen rate
+            HEALTH += Time.deltaTime*0.15f*inCombat; //Health regen rate
         }
         if(justHitted > 0)
             justHitted -= Time.deltaTime;
+        if(inCombat < 1)
+            inCombat += Time.deltaTime;
+        else
+            inCombat = 1;
     }
 
     void FixedUpdate() {
@@ -201,7 +206,7 @@ public class CarController : MonoBehaviour
             return;
         
         //Create a force for the engine & limit max speed
-        if (carRigidbody2D.velocity.magnitude <= (HEALTH > 1.5f ? HEALTH : 1.5f)) {
+        if (carRigidbody2D.velocity.magnitude <= (HEALTH > 1.75f ? HEALTH : 1.75f)) {
             float speedIncrement = (HEALTH - carRigidbody2D.velocity.magnitude)/HEALTH; //Increment inertia if going fast
             Vector2 engineForceVector = transform.up * accelerationFactor * Time.fixedDeltaTime * (1+speedIncrement);
             carRigidbody2D.AddForce(engineForceVector, ForceMode2D.Force);
@@ -218,7 +223,7 @@ public class CarController : MonoBehaviour
         Vector2 forwardVelocity = transform.up * Vector2.Dot(carRigidbody2D.velocity, transform.up);
         rightVelocity = transform.right * Vector2.Dot(carRigidbody2D.velocity, transform.right);
         //Debug.Log(rightVelocity.magnitude/carRigidbody2D.velocity.magnitude);
-        carRigidbody2D.velocity = forwardVelocity + rightVelocity * ((1-driftFactor) + driftFactor*(rightVelocity.magnitude/HEALTH));
+        carRigidbody2D.velocity = forwardVelocity + rightVelocity * ((1-driftFactor) + driftFactor*(rightVelocity.magnitude/MinMaxSpeed.y));
 
         //Apply rotation
         rotationAngle -= steeringInput * steeringSpeed * Time.fixedDeltaTime;
@@ -230,7 +235,7 @@ public class CarController : MonoBehaviour
         {
             cam.Shake(0.1f, 0.1f, 30);
             if(col.transform.CompareTag("Enemy")) {
-                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x)
+                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x && HEALTH < MinMaxSpeed.x)
                     carRigidbody2D.velocity += rightVelocity.normalized * 0.125f;
 
                 col.gameObject.GetComponent<zombieFlacoController>().die();
@@ -247,7 +252,7 @@ public class CarController : MonoBehaviour
             }else if(col.transform.CompareTag("Cacti")){
                 col.gameObject.GetComponent<CactusController>().cut();
             }
-            
+            inCombat = 0;
         }
     }
     
@@ -255,15 +260,15 @@ public class CarController : MonoBehaviour
         if (col.contacts[0].otherCollider.transform.gameObject.name != transform.gameObject.name) //Check if local hitbox
             return;
 
-        float colForce = Vector2.Dot(col.relativeVelocity.normalized, -transform.up);
+        float colForce = Vector2.Dot((transform.position - col.transform.position).normalized, -transform.up);
         
-        if(colForce > 0.9f && justHitted <= 0){
+        if(colForce > 0.5f && justHitted <= 0){
             if(col.transform.CompareTag("Enemy"))
                 col.gameObject.GetComponent<zombieFlacoController>().die();
             else if(col.transform.CompareTag("Cacti"))
                 col.gameObject.GetComponent<CactusController>().cut();
 
-            HEALTH -= (colForce - 0.8f)*12f;
+            HEALTH -= (0.25f + ((colForce - 0.5f)/2f)) * 4f;
             Instantiate(crashEffect, transform.position, crashEffect.transform.rotation);
             justHitted = 1;
 

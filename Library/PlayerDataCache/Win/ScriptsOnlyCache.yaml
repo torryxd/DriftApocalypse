@@ -17,6 +17,7 @@ ScriptsOnlyBuild:
     - eventButton
     - interactionButton
     - lookAtCamera
+    - splashController
     - zombieFlacoController
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
@@ -110,43 +111,45 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2484}
     - Class: 114
-      Script: {instanceID: 2634}
+      Script: {instanceID: 2492}
     - Class: 114
-      Script: {instanceID: 2640}
+      Script: {instanceID: 2636}
     - Class: 114
-      Script: {instanceID: 2678}
+      Script: {instanceID: 2642}
     - Class: 114
       Script: {instanceID: 2680}
     - Class: 114
-      Script: {instanceID: 2810}
+      Script: {instanceID: 2682}
     - Class: 114
-      Script: {instanceID: 2834}
+      Script: {instanceID: 2812}
     - Class: 114
-      Script: {instanceID: 2970}
+      Script: {instanceID: 2836}
     - Class: 114
-      Script: {instanceID: 3026}
+      Script: {instanceID: 2972}
     - Class: 114
-      Script: {instanceID: 3138}
+      Script: {instanceID: 2974}
     - Class: 114
-      Script: {instanceID: 3442}
+      Script: {instanceID: 3030}
     - Class: 114
-      Script: {instanceID: 3822}
+      Script: {instanceID: 3142}
     - Class: 114
-      Script: {instanceID: 3980}
+      Script: {instanceID: 3446}
     - Class: 114
-      Script: {instanceID: 4620}
+      Script: {instanceID: 3826}
     - Class: 114
-      Script: {instanceID: 4638}
+      Script: {instanceID: 3984}
     - Class: 114
-      Script: {instanceID: 4688}
+      Script: {instanceID: 4624}
     - Class: 114
-      Script: {instanceID: 4762}
+      Script: {instanceID: 4642}
     - Class: 114
-      Script: {instanceID: 4914}
+      Script: {instanceID: 4692}
     - Class: 114
-      Script: {instanceID: 5032}
+      Script: {instanceID: 4766}
     - Class: 114
-      Script: {instanceID: 84598}
+      Script: {instanceID: 4918}
+    - Class: 114
+      Script: {instanceID: 5036}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -199,29 +202,29 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2484}
     - Class: 114
-      Script: {instanceID: 2640}
+      Script: {instanceID: 2642}
     - Class: 114
-      Script: {instanceID: 2680}
+      Script: {instanceID: 2682}
     - Class: 114
-      Script: {instanceID: 2810}
+      Script: {instanceID: 2812}
     - Class: 114
-      Script: {instanceID: 3026}
+      Script: {instanceID: 3030}
     - Class: 114
-      Script: {instanceID: 3138}
+      Script: {instanceID: 3142}
     - Class: 114
-      Script: {instanceID: 3822}
+      Script: {instanceID: 3826}
     - Class: 114
-      Script: {instanceID: 3862}
+      Script: {instanceID: 3866}
     - Class: 114
-      Script: {instanceID: 4176}
+      Script: {instanceID: 4180}
     - Class: 114
-      Script: {instanceID: 4294}
+      Script: {instanceID: 4298}
     - Class: 114
-      Script: {instanceID: 4620}
+      Script: {instanceID: 4624}
     - Class: 114
-      Script: {instanceID: 4630}
+      Script: {instanceID: 4634}
     - Class: 114
-      Script: {instanceID: 4914}
+      Script: {instanceID: 4918}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -427,6 +430,12 @@ ScriptsOnlyBuild:
     className: CanvasScaler
   - hash:
       serializedVersion: 2
+      Hash: 7f470ca41a551244ff86975df8c22b1d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: splashController
+  - hash:
+      serializedVersion: 2
       Hash: 4d16cfbaa8e821a2b370e80844a0e9bc
     assemblyName: Assembly-CSharp.dll
     namespaceName: TMPro.Examples
@@ -551,6 +560,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EscenarioController
+  - hash:
+      serializedVersion: 2
+      Hash: 194a53724f7db9a4f28ac7c7db09dc61
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: destroyInSeconds
   - hash:
       serializedVersion: 2
       Hash: 748dd2a2a28da4e618912da5ac45684b
@@ -991,7 +1006,7 @@ ScriptsOnlyBuild:
     className: TextConsoleSimulator
   - hash:
       serializedVersion: 2
-      Hash: 7b00f9eb8839d962cd29f91ee0a7e80f
+      Hash: ae925b4afc905eb971d3818d52450063
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CactusController
@@ -1027,7 +1042,7 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
-      Hash: 8bad8928840fdd17ccbfb7fad35214cf
+      Hash: 4b89d70f0821c6400a5092f12a43239d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: zombieFlacoController
@@ -1073,12 +1088,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: TMPro.Examples
     className: TMP_TextEventCheck
-  - hash:
-      serializedVersion: 2
-      Hash: 194a53724f7db9a4f28ac7c7db09dc61
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: destroyInSeconds
   platform: 5
   scenePathNames:
   - Assets/ASSETS/Scenes/MainMenu.unity

@@ -183,7 +183,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c917d3d5518884e832decf33b29741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0.04, y: 0.04}
+  offset: {x: 0.035, y: 0.035}
   shadowMaterial: {fileID: 2100000, guid: 610f93298e0863343b133c5a1a501124, type: 2}
   shadowColor: {r: 0.2509804, g: 0.32156864, b: 0.36078432, a: 1}
 --- !u!114 &6394406216240132953
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cc3c05ff320e549b0cff9be069d0f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 1.3
+  moveForce: 0.13
   defaultMaxSpeed: 0.2
-  squishEffect: {fileID: 5193088048976558219, guid: b937f81c29ef1164f85a0a0b99338f73, type: 3}
+  squishEffect: {fileID: 5044525961171234257, guid: 52e2220c25a45d54ebe66fcae5cee7de, type: 3}
+  spr: {fileID: 6394406216240132949}
