@@ -5801,7 +5801,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.000045776, y: -0.000015259}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 2469.5, y: 205.16}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &460503248
@@ -6426,7 +6426,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.25}
-  m_Size: {x: 0.4, y: 0.6}
+  m_Size: {x: 0.4, y: 0.65}
   m_Direction: 0
 --- !u!82 &676938723
 AudioSource:
@@ -6890,7 +6890,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: eb57a935a14990a43b8ba9784f971e62, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11747,7 +11747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c917d3d5518884e832decf33b29741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0.06, y: 0.06}
+  offset: {x: 0.065, y: 0.065}
   shadowMaterial: {fileID: 2100000, guid: 610f93298e0863343b133c5a1a501124, type: 2}
   shadowColor: {r: 0.2509804, g: 0.32156864, b: 0.36078432, a: 1}
 --- !u!114 &736518586
@@ -11768,7 +11768,7 @@ MonoBehaviour:
   accelerationFactor: 95
   defaultAccelerationFactor: 0
   MinMaxSpeed: {x: 2.5, y: 3.5}
-  boostAcceleration: 1.4
+  boostAcceleration: 1.5
   originalScale: {x: 0, y: 0, z: 0}
   steeringSpeed: 220
   wheelSteeringFactor: 1
@@ -13503,6 +13503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mobileCam: 0
   pixelEffect: 0
+  hiScore: 0
 --- !u!4 &1285640879
 Transform:
   m_ObjectHideFlags: 0

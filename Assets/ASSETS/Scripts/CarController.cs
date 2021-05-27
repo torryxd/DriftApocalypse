@@ -20,6 +20,7 @@ public class CarController : MonoBehaviour
     private float tailSpeed = 1;
     private Vector3 previousTailPosition;
     private float justHitted = 0;
+    private float inCombat = 0;
 
     [Header("Car steering")]
     public float steeringSpeed = 250f;
@@ -49,6 +50,7 @@ public class CarController : MonoBehaviour
 
     [Header("Components")]
     private Rigidbody2D carRigidbody2D;
+    private GlobalSettings gs;
     public CamController cam;
     public PauseMenu pauseMenu;
     public GameObject EndPoint;
@@ -69,11 +71,13 @@ public class CarController : MonoBehaviour
         engineEffectMain = EngineEffect.GetComponent<ParticleSystem>();
         engineEffectMain.emissionRate = 0;
         trailRenderers = GetComponentsInChildren<TrailRenderer>();
+        gs = FindObjectOfType<GlobalSettings>();
 
         defaultAccelerationFactor = accelerationFactor;
         GravelSoundVolume = GravelSound.volume;
         SmokeSoundVolume = SmokeSound.volume;
         originalScale = this.transform.localScale;
+        txtScore.text = gs.hiScore.ToString(); txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gs.hiScore.ToString();
     }
 
     bool firstLEFT, firstRIGHT, firstLEFTandRIGHT;
@@ -190,10 +194,14 @@ public class CarController : MonoBehaviour
         //Health
         if(HEALTH < MinMaxSpeed.x){
             engineEffectMain.emissionRate = Mathf.RoundToInt((MinMaxSpeed.x - (HEALTH))*20);
-            HEALTH += Time.deltaTime*0.15f; //Health regen rate
+            HEALTH += Time.deltaTime*0.15f*inCombat; //Health regen rate
         }
         if(justHitted > 0)
             justHitted -= Time.deltaTime;
+        if(inCombat < 1)
+            inCombat += Time.deltaTime;
+        else
+            inCombat = 1;
     }
 
     void FixedUpdate() {
@@ -201,7 +209,7 @@ public class CarController : MonoBehaviour
             return;
         
         //Create a force for the engine & limit max speed
-        if (carRigidbody2D.velocity.magnitude <= (HEALTH > 1.5f ? HEALTH : 1.5f)) {
+        if (carRigidbody2D.velocity.magnitude <= (HEALTH > 1.75f ? HEALTH : 1.75f)) {
             float speedIncrement = (HEALTH - carRigidbody2D.velocity.magnitude)/HEALTH; //Increment inertia if going fast
             Vector2 engineForceVector = transform.up * accelerationFactor * Time.fixedDeltaTime * (1+speedIncrement);
             carRigidbody2D.AddForce(engineForceVector, ForceMode2D.Force);
@@ -218,7 +226,7 @@ public class CarController : MonoBehaviour
         Vector2 forwardVelocity = transform.up * Vector2.Dot(carRigidbody2D.velocity, transform.up);
         rightVelocity = transform.right * Vector2.Dot(carRigidbody2D.velocity, transform.right);
         //Debug.Log(rightVelocity.magnitude/carRigidbody2D.velocity.magnitude);
-        carRigidbody2D.velocity = forwardVelocity + rightVelocity * ((1-driftFactor) + driftFactor*(rightVelocity.magnitude/HEALTH));
+        carRigidbody2D.velocity = forwardVelocity + rightVelocity * ((1-driftFactor) + driftFactor*(rightVelocity.magnitude/MinMaxSpeed.y));
 
         //Apply rotation
         rotationAngle -= steeringInput * steeringSpeed * Time.fixedDeltaTime;
@@ -226,26 +234,20 @@ public class CarController : MonoBehaviour
     }
 
     public void OnTriggerEnterChilds(Collider2D col, string colChild) {
-        if(col.transform.CompareTag("Enemy"))
+        if(colChild == "BACK" && isDrifting && !col.transform.CompareTag("Smoke"))
         {
-            if(colChild == "BACK" && isDrifting)
-            {
-                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x)
+            cam.Shake(0.1f, 0.1f, 50);
+            if(col.transform.CompareTag("Enemy")) {
+                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x && HEALTH < MinMaxSpeed.x)
                     carRigidbody2D.velocity += rightVelocity.normalized * 0.125f;
-                cam.Shake(0.1f, 0.1f, 30);
 
                 col.gameObject.GetComponent<zombieFlacoController>().die();
 
-                SCORE += 1 * Mathf.Ceil(COMBO);
-                if(txtScore.gameObject.transform.localScale.magnitude < 4f)
-                    txtScore.gameObject.transform.localScale *= 1.2f;
-                txtScore.text = SCORE.ToString(); txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = SCORE.ToString();
-
-                if(COMBO < 9)
-                    COMBO += 1;
-                if(txtCombo.gameObject.transform.localScale.magnitude < 2.5f)
-                    txtCombo.gameObject.transform.localScale *= 1.3f;
+                writeScore();
+            }else if(col.transform.CompareTag("Cacti")){
+                col.gameObject.GetComponent<CactusController>().cut();
             }
+            inCombat = 0;
         }
     }
     
@@ -253,13 +255,15 @@ public class CarController : MonoBehaviour
         if (col.contacts[0].otherCollider.transform.gameObject.name != transform.gameObject.name) //Check if local hitbox
             return;
 
-        float colForce = Vector2.Dot(col.relativeVelocity.normalized, -transform.up);
+        float colForce = Vector2.Dot((transform.position - col.transform.position).normalized, -transform.up);
         
-        if(colForce > 0.9f && justHitted <= 0){
+        if(colForce > 0.5f && justHitted <= 0){
             if(col.transform.CompareTag("Enemy"))
                 col.gameObject.GetComponent<zombieFlacoController>().die();
+            else if(col.transform.CompareTag("Cacti"))
+                col.gameObject.GetComponent<CactusController>().cut();
 
-            HEALTH -= (colForce - 0.8f)*12f;
+            HEALTH -= (0.25f + ((colForce - 0.5f)/2f)) * 4f;
             Instantiate(crashEffect, transform.position, crashEffect.transform.rotation);
             justHitted = 1;
 
@@ -268,11 +272,41 @@ public class CarController : MonoBehaviour
 
                 pauseMenu.showGameOver();
                 Time.timeScale = 0;
-                cam.Shake(0.1f, 0.3f);
+                cam.Shake(0.2f, 0.5f);
 
             }else{ //LOOSE HP
-                cam.Shake(0.1f, 0.3f, 100);
+                cam.Shake(0.15f, 0.3f, 100);
             }
         }
+    }
+
+    public void OnTriggerStay2D(Collider2D col){
+        if(col.transform.CompareTag("Smoke")){
+            if(HEALTH > 0.5f){
+                HEALTH -= Time.deltaTime * 0.4f;
+                inCombat = 0;
+                //cam.Shake(0.01f, 0.01f);
+            }
+        }
+    }
+
+    void writeScore(){
+        string scoreStr;
+        SCORE += 1 * Mathf.Ceil(COMBO);
+        if(txtScore.gameObject.transform.localScale.magnitude < 4f)
+            txtScore.gameObject.transform.localScale *= 1.2f;
+
+        if(SCORE < gs.hiScore){
+            scoreStr = (Mathf.Abs(SCORE - gs.hiScore)).ToString();
+        }else{
+            scoreStr = "+ " + SCORE.ToString() + " +";
+            gs.SaveScore((int)SCORE);
+        }
+        txtScore.text = scoreStr; txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = scoreStr;
+
+        if(COMBO < 9)
+            COMBO += 1;
+        if(txtCombo.gameObject.transform.localScale.magnitude < 2.5f)
+            txtCombo.gameObject.transform.localScale *= 1.3f;
     }
 }

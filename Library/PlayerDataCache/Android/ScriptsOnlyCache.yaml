@@ -15,9 +15,12 @@ ScriptsOnlyBuild:
     - TriggerDetector
     - destroyInSeconds
     - eventButton
+    - humoGordo
     - interactionButton
     - lookAtCamera
+    - splashController
     - zombieFlacoController
+    - zombieGordoController
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
@@ -45,8 +48,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -102,51 +107,57 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1462}
     - Class: 114
-      Script: {instanceID: 1574}
+      Script: {instanceID: 1584}
     - Class: 114
-      Script: {instanceID: 1790}
+      Script: {instanceID: 1800}
     - Class: 114
-      Script: {instanceID: 2014}
+      Script: {instanceID: 2024}
     - Class: 114
-      Script: {instanceID: 2484}
+      Script: {instanceID: 2494}
     - Class: 114
-      Script: {instanceID: 2634}
+      Script: {instanceID: 2502}
     - Class: 114
-      Script: {instanceID: 2640}
+      Script: {instanceID: 2646}
     - Class: 114
-      Script: {instanceID: 2678}
+      Script: {instanceID: 2652}
     - Class: 114
-      Script: {instanceID: 2680}
+      Script: {instanceID: 2690}
     - Class: 114
-      Script: {instanceID: 2810}
+      Script: {instanceID: 2692}
     - Class: 114
-      Script: {instanceID: 2834}
+      Script: {instanceID: 2822}
     - Class: 114
-      Script: {instanceID: 2970}
+      Script: {instanceID: 2846}
     - Class: 114
-      Script: {instanceID: 2972}
+      Script: {instanceID: 2982}
     - Class: 114
-      Script: {instanceID: 3028}
+      Script: {instanceID: 2984}
     - Class: 114
-      Script: {instanceID: 3140}
+      Script: {instanceID: 3040}
     - Class: 114
-      Script: {instanceID: 3444}
+      Script: {instanceID: 3152}
     - Class: 114
-      Script: {instanceID: 3824}
+      Script: {instanceID: 3456}
     - Class: 114
-      Script: {instanceID: 3982}
+      Script: {instanceID: 3836}
     - Class: 114
-      Script: {instanceID: 4622}
+      Script: {instanceID: 3994}
     - Class: 114
-      Script: {instanceID: 4640}
+      Script: {instanceID: 4634}
     - Class: 114
-      Script: {instanceID: 4690}
+      Script: {instanceID: 4652}
     - Class: 114
-      Script: {instanceID: 4764}
+      Script: {instanceID: 4702}
     - Class: 114
-      Script: {instanceID: 4916}
+      Script: {instanceID: 4776}
     - Class: 114
-      Script: {instanceID: 5034}
+      Script: {instanceID: 4928}
+    - Class: 114
+      Script: {instanceID: 5046}
+    - Class: 114
+      Script: {instanceID: 40496}
+    - Class: 114
+      Script: {instanceID: 68584}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -191,37 +202,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1462}
     - Class: 114
-      Script: {instanceID: 1790}
+      Script: {instanceID: 1800}
     - Class: 114
-      Script: {instanceID: 2014}
+      Script: {instanceID: 2024}
     - Class: 114
-      Script: {instanceID: 2104}
+      Script: {instanceID: 2114}
     - Class: 114
-      Script: {instanceID: 2484}
+      Script: {instanceID: 2494}
     - Class: 114
-      Script: {instanceID: 2640}
+      Script: {instanceID: 2652}
     - Class: 114
-      Script: {instanceID: 2680}
+      Script: {instanceID: 2692}
     - Class: 114
-      Script: {instanceID: 2810}
+      Script: {instanceID: 2822}
     - Class: 114
-      Script: {instanceID: 3028}
+      Script: {instanceID: 3040}
     - Class: 114
-      Script: {instanceID: 3140}
+      Script: {instanceID: 3152}
     - Class: 114
-      Script: {instanceID: 3824}
+      Script: {instanceID: 3836}
     - Class: 114
-      Script: {instanceID: 3864}
+      Script: {instanceID: 3876}
     - Class: 114
-      Script: {instanceID: 4178}
+      Script: {instanceID: 4190}
     - Class: 114
-      Script: {instanceID: 4296}
+      Script: {instanceID: 4308}
     - Class: 114
-      Script: {instanceID: 4622}
+      Script: {instanceID: 4634}
     - Class: 114
-      Script: {instanceID: 4632}
+      Script: {instanceID: 4644}
     - Class: 114
-      Script: {instanceID: 4916}
+      Script: {instanceID: 4928}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -361,7 +372,7 @@ ScriptsOnlyBuild:
     className: TMP_DigitValidator
   - hash:
       serializedVersion: 2
-      Hash: 5d2de6f9f4bafe8d53e191c889b17b0a
+      Hash: c38abbe9c4396b8680880e5e11940bd0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GlobalSettings
@@ -425,6 +436,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: CanvasScaler
+  - hash:
+      serializedVersion: 2
+      Hash: 7f470ca41a551244ff86975df8c22b1d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: splashController
   - hash:
       serializedVersion: 2
       Hash: 4d16cfbaa8e821a2b370e80844a0e9bc
@@ -997,7 +1014,7 @@ ScriptsOnlyBuild:
     className: TextConsoleSimulator
   - hash:
       serializedVersion: 2
-      Hash: 7b00f9eb8839d962cd29f91ee0a7e80f
+      Hash: ae925b4afc905eb971d3818d52450063
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CactusController
@@ -1033,7 +1050,7 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
-      Hash: 8bad8928840fdd17ccbfb7fad35214cf
+      Hash: 6c70891556e318264e7e3cc46ff8bde3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: zombieFlacoController
@@ -1079,6 +1096,24 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: TMPro.Examples
     className: TMP_TextEventCheck
+  - hash:
+      serializedVersion: 2
+      Hash: fac593866cfbc222af280b931ad2472d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: humoGordo
+  - hash:
+      serializedVersion: 2
+      Hash: 95535199345bf9b2dd39092e59d28624
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: colorFader
+  - hash:
+      serializedVersion: 2
+      Hash: f1f1dbb9e026e793952190376548222f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: zombieGordoController
   platform: 13
   scenePathNames:
   - Assets/ASSETS/Scenes/MainMenu.unity

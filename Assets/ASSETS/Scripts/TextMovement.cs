@@ -18,7 +18,7 @@ public class TextMovement : MonoBehaviour
     {
 		originalSize = transform.localScale;
 		//transform.localScale *= 0.1f;
-		offSetTime = Random.Range(0.01f, 1f);
+		//offSetTime = Random.Range(0.01f, 1f);
     }
 
     // Update is called once per frame
