@@ -4,7 +4,7 @@ using System.Collections;
 //[ExecuteInEditMode]
 public class PixelCamera : MonoBehaviour {
 	public int referenceHeight = 180;
-	[HideInInspector] //
+	[HideInInspector] //Camera Adjust
 	public int pixelsPerUnit = 32;
 
 	private int renderWidth;
@@ -28,8 +28,7 @@ public class PixelCamera : MonoBehaviour {
 		*/
 		
 		renderHeight = referenceHeight;
-		//LO DEJE DE USAR
-		//cam.orthographicSize = (renderHeight / 2) / (float)pixelsPerUnit;
+		//cam.orthographicSize = (renderHeight / 2) / (float)pixelsPerUnit; //Camera Adjust
 		
 		int scale = Screen.height / renderHeight;
 		
