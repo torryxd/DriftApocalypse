@@ -43,6 +43,12 @@ public class zombieFlacoController : MonoBehaviour
         }else if(comportamiento == 4){ // COBARDE
             defaultMaxSpeed *= 0.4f;
         }
+        
+        float speedIncreaseDifficulty = 1 + (Mathf.Sqrt(car.SCORE) / 35);
+        Debug.Log(speedIncreaseDifficulty);
+        defaultMaxSpeed *= speedIncreaseDifficulty;
+        moveForce *= speedIncreaseDifficulty;
+
     }
 
     void Update(){

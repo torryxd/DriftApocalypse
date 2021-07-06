@@ -34,6 +34,9 @@ public class CarController : MonoBehaviour
     public GameObject LeftEffect;
     public GameObject RightEffect;
     public GameObject EngineEffect;
+    public AudioSource EngineFailureSound;
+    public GameObject EngineRepairedEff;
+    private bool engineFullHP = true;
     private ParticleSystem.MainModule leftEffMain;
     private ParticleSystem.MainModule rightEffMain;
     private ParticleSystem engineEffectMain;
@@ -76,6 +79,7 @@ public class CarController : MonoBehaviour
         defaultAccelerationFactor = accelerationFactor;
         GravelSoundVolume = GravelSound.volume;
         SmokeSoundVolume = SmokeSound.volume;
+        SmokeSoundVolume = SmokeSound.volume;
         originalScale = this.transform.localScale;
         txtScore.text = gs.hiScore.ToString(); txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gs.hiScore.ToString();
     }
@@ -87,12 +91,13 @@ public class CarController : MonoBehaviour
         bool RIGHT = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || ButtonRight.ispressed;
         
         if(RIGHT && LEFT) {
+            SmokeSound.pitch = 1f;
+            SmokeSound.panStereo = 0f;
             if(HEALTH >= MinMaxSpeed.x)
                 HEALTH = Mathf.Lerp(HEALTH, MinMaxSpeed.y, Time.deltaTime);
 
             if(firstLEFTandRIGHT){
                 this.transform.localScale = new Vector3(originalScale.x*0.875f, originalScale.y*1.125f, 1);
-                SmokeSound.pitch = 1f;
                 accelerationFactor = defaultAccelerationFactor * boostAcceleration;
                 SmokeSound.volume = SmokeSoundVolume*1.75F;
                 firstLEFTandRIGHT = false;
@@ -114,6 +119,7 @@ public class CarController : MonoBehaviour
             if(firstLEFT){
                 leftEffMain.startLifetime = smokeTime;
                 SmokeSound.pitch = 1.075f;
+                SmokeSound.panStereo = -0.5f;
                 if(SmokeSound.volume < SmokeSoundVolume)
                     SmokeSound.volume = SmokeSoundVolume;
                 firstLEFT = false;
@@ -132,6 +138,7 @@ public class CarController : MonoBehaviour
             if(firstRIGHT){
                 rightEffMain.startLifetime = smokeTime;
                 SmokeSound.pitch = 0.925f;
+                SmokeSound.panStereo = +0.5f;
                 if(SmokeSound.volume < SmokeSoundVolume)
                     SmokeSound.volume = SmokeSoundVolume;
                 firstRIGHT = false;
@@ -194,8 +201,20 @@ public class CarController : MonoBehaviour
         //Health
         if(HEALTH < MinMaxSpeed.x){
             engineEffectMain.emissionRate = Mathf.RoundToInt((MinMaxSpeed.x - (HEALTH))*20);
-            HEALTH += Time.deltaTime*0.15f*inCombat; //Health regen rate
+
+            EngineFailureSound.enabled = true;
+            EngineFailureSound.pitch = 2 + ((MinMaxSpeed.y - HEALTH)-1);
+            
+            HEALTH += Time.deltaTime*0.225f*inCombat; //Health regen rate
+            engineFullHP = false;
+        }else{
+            if(!engineFullHP){
+                Instantiate(EngineRepairedEff, transform.position, transform.rotation);
+                EngineFailureSound.enabled = false;
+                engineFullHP = true;
+            }
         }
+
         if(justHitted > 0)
             justHitted -= Time.deltaTime;
         if(inCombat < 1)
@@ -236,8 +255,8 @@ public class CarController : MonoBehaviour
     public void OnTriggerEnterChilds(Collider2D col, string colChild) {
         if(colChild == "BACK" && isDrifting && !col.transform.CompareTag("Smoke"))
         {
-            cam.Shake(0.1f, 0.1f, 50);
             if(col.transform.CompareTag("Enemy")) {
+                cam.Shake(0.125f, 0.115f, 60);
                 if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x && HEALTH < MinMaxSpeed.x)
                     carRigidbody2D.velocity += rightVelocity.normalized * 0.125f;
 
@@ -245,6 +264,7 @@ public class CarController : MonoBehaviour
 
                 writeScore();
             }else if(col.transform.CompareTag("Cacti")){
+                cam.Shake(0.1f, 0.115f, 30);
                 col.gameObject.GetComponent<CactusController>().cut();
             }
             inCombat = 0;
@@ -275,7 +295,7 @@ public class CarController : MonoBehaviour
                 cam.Shake(0.2f, 0.5f);
 
             }else{ //LOOSE HP
-                cam.Shake(0.15f, 0.3f, 100);
+                cam.Shake(0.15f, 0.35f, 150);
             }
         }
     }
