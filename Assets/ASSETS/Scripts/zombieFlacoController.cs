@@ -44,10 +44,8 @@ public class zombieFlacoController : MonoBehaviour
             defaultMaxSpeed *= 0.4f;
         }
         
-        float speedIncreaseDifficulty = 1 + (Mathf.Sqrt(car.SCORE) / 35);
-        Debug.Log(speedIncreaseDifficulty);
-        defaultMaxSpeed *= speedIncreaseDifficulty;
-        moveForce *= speedIncreaseDifficulty;
+        defaultMaxSpeed *= 1f + (Mathf.Sqrt(car.SCORE) / 35f);
+        moveForce *= 1f + (Mathf.Sqrt(car.SCORE) / 100f);
 
     }
 
@@ -76,7 +74,7 @@ public class zombieFlacoController : MonoBehaviour
                 }
             }else if(comportamiento == 2){ // DIAGONAL
                 rb2d.AddForce(v2.normalized * moveForce);
-                v2 = (car.transform.position + car.transform.right*10*(defaultMaxSpeed > originalMaxSpeed ? 1 : -1)) - this.transform.position;
+                v2 = (car.transform.position + car.transform.right*6*(defaultMaxSpeed > originalMaxSpeed ? 1 : -1)) - this.transform.position;
                 rb2d.AddForce(v2.normalized * moveForce);
             }else if(comportamiento == 3){ // FLANQUEADOR
                 if(carDist > 5f){

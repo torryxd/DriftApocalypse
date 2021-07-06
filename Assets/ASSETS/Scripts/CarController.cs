@@ -203,9 +203,9 @@ public class CarController : MonoBehaviour
             engineEffectMain.emissionRate = Mathf.RoundToInt((MinMaxSpeed.x - (HEALTH))*20);
 
             EngineFailureSound.enabled = true;
-            EngineFailureSound.pitch = 2 + ((MinMaxSpeed.y - HEALTH)-1);
+            EngineFailureSound.pitch = 1 + ((MinMaxSpeed.y - HEALTH)-1);
             
-            HEALTH += Time.deltaTime*0.225f*inCombat; //Health regen rate
+            HEALTH += Time.deltaTime*0.225f; // *inCombat  // Health regen rate
             engineFullHP = false;
         }else{
             if(!engineFullHP){
@@ -277,7 +277,7 @@ public class CarController : MonoBehaviour
 
         float colForce = Vector2.Dot((transform.position - col.transform.position).normalized, -transform.up);
         
-        if(colForce > 0.5f && justHitted <= 0){
+        if(colForce > 0.7f && justHitted <= 0){
             if(col.transform.CompareTag("Enemy"))
                 col.gameObject.GetComponent<zombieFlacoController>().die();
             else if(col.transform.CompareTag("Cacti"))
