@@ -47,7 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c917d3d5518884e832decf33b29741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0.045, y: 0.045}
+  createAsChildren: 1
+  offset: {x: 0.06, y: 0.06}
   shadowMaterial: {fileID: 2100000, guid: 610f93298e0863343b133c5a1a501124, type: 2}
   shadowColor: {r: 0.2509804, g: 0.32156864, b: 0.36078432, a: 1}
 --- !u!114 &6824609270974226287
@@ -139,6 +140,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

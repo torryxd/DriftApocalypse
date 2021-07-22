@@ -8,6 +8,7 @@ public class interactionButton : MonoBehaviour, IPointerDownHandler, IPointerUpH
     public float scaleIncrease = 1.15f;
     
     private Vector3 originalScale;
+    public GameObject pop;
 
 
     void Start(){
@@ -16,6 +17,8 @@ public class interactionButton : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     public void OnPointerDown(PointerEventData eventData) {
         transform.localScale = originalScale * scaleIncrease;
+        
+        Instantiate(pop, transform.position, transform.rotation);
     }
     public void OnPointerUp(PointerEventData eventData) {
         transform.localScale = originalScale;

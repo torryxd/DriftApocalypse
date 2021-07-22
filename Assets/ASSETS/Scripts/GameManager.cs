@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float spawnQueue = 1;
     public float incrementSpawnQueue = 1f; //Valor con el que empieza el Increment
-    public float difficultyFactor = 0.99f; //Valor por el que se multiplica el increment por cada zombie matado
+    public float decrementBySpawn = 0.98f; //Valor con el que empieza el Increment
     public float gordoChance = 0.2f;
     public GameObject zombieFlaco;
     public GameObject zombieGordo;
@@ -17,14 +17,6 @@ public class GameManager : MonoBehaviour
 
     private float rnd;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        for(int i = 0; i < 10; i++){
-            SpawningZombie();
-        }
-    }
 
     // Update is called once per frame
     void SpawningZombie(){
@@ -36,7 +28,8 @@ public class GameManager : MonoBehaviour
             ang = Random.Range(0f, 360f);
 
             if(rnd < gordoChance){
-                Instantiate(zombieGordo, RandomCircle(), zombieGordo.transform.rotation);
+                GameObject zombi = Instantiate(zombieGordo, RandomCircle(), zombieGordo.transform.rotation);
+                zombi.GetComponent<zombieFlacoController>().comportamiento = 3; //FLANQUEADOR
             }else{
                 Instantiate(zombieFlaco, RandomCircle(), zombieFlaco.transform.rotation);
             }
@@ -52,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     public void IncreaseRate(){
         spawnQueue += incrementSpawnQueue;
-        incrementSpawnQueue *= difficultyFactor;
+        incrementSpawnQueue *= decrementBySpawn;
 
         SpawningZombie();
     }

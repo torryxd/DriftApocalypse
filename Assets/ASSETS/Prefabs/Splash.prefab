@@ -147,7 +147,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  emitterVelocityMode: 1
+  emitterVelocityMode: 0
   looping: 0
   prewarm: 0
   playOnAwake: 1
@@ -5090,7 +5090,7 @@ AudioSource:
   m_GameObject: {fileID: 3535165438374240717}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 54136039101240998, guid: 4ce40f060049dc74aa4e6e2f4b2ffdda, type: 2}
   m_audioClip: {fileID: 8300000, guid: c3fde86c9e14eed49b2d9db39338bf04, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.75
@@ -5286,6 +5286,7 @@ GameObject:
   - component: {fileID: 5044525961171234258}
   - component: {fileID: 5044525961171234259}
   - component: {fileID: 5044525961171234260}
+  - component: {fileID: 3927412222526151203}
   m_Layer: 0
   m_Name: Splash
   m_TagString: Untagged
@@ -5339,7 +5340,7 @@ AudioSource:
   m_GameObject: {fileID: 5044525961171234257}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 54136039101240998, guid: 4ce40f060049dc74aa4e6e2f4b2ffdda, type: 2}
   m_audioClip: {fileID: 8300000, guid: 226bf7db6688aaf49affcc87fd83e33f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -5426,6 +5427,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3927412222526151203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044525961171234257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d3b7e9438d32846854eb6650dc9d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rndRegion: 0.15
 --- !u!1 &5143190001041366939
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class PixelCamera : MonoBehaviour {
 	void Start () {
 		cam = GetComponent<Camera>();
         gs = FindObjectOfType<GlobalSettings>();
-        this.enabled = gs.pixelEffect;
+        this.enabled = !gs.disablePixelEffect;
 	}
 
 	void Update() {

@@ -20,7 +20,6 @@ public class CarController : MonoBehaviour
     private float tailSpeed = 1;
     private Vector3 previousTailPosition;
     private float justHitted = 0;
-    private float inCombat = 0;
 
     [Header("Car steering")]
     public float steeringSpeed = 250f;
@@ -41,6 +40,7 @@ public class CarController : MonoBehaviour
     private ParticleSystem.MainModule rightEffMain;
     private ParticleSystem engineEffectMain;
     private TrailRenderer[] trailRenderers;
+    public GameObject scoreUpwardsNumber;
     
     public eventButton ButtonLeft;
     public eventButton ButtonRight;
@@ -48,6 +48,14 @@ public class CarController : MonoBehaviour
     private float rotationAngle;
     private Vector2 rightVelocity;
     private bool isDrifting;
+    private float driftCoyote;
+    
+    [SerializeField]private bool comboPowerUp = false;
+    public GameObject invencibilityEffect;
+    public GameObject splashInvencible;
+    public Color invencibilityColor;
+    private float colorGoWhite = 0;
+    private float comboCooldown = 0;
 
     public GameObject crashEffect;
 
@@ -57,7 +65,6 @@ public class CarController : MonoBehaviour
     public CamController cam;
     public PauseMenu pauseMenu;
     public GameObject EndPoint;
-    public Collider2D FrontCollider;
     public Collider2D BackCollider;
     public AudioSource EngineSound;
     public AudioSource GravelSound;
@@ -66,9 +73,11 @@ public class CarController : MonoBehaviour
     private float SmokeSoundVolume;
     public TextMeshProUGUI txtScore;
     public TextMeshProUGUI txtCombo;
+    public GameObject carSprite;
     
     void Start() {
         carRigidbody2D = GetComponent<Rigidbody2D>();
+        carRigidbody2D.velocity = Vector2.zero;
         leftEffMain = LeftEffect.GetComponent<ParticleSystem>().main;
         rightEffMain = RightEffect.GetComponent<ParticleSystem>().main;
         engineEffectMain = EngineEffect.GetComponent<ParticleSystem>();
@@ -80,7 +89,7 @@ public class CarController : MonoBehaviour
         GravelSoundVolume = GravelSound.volume;
         SmokeSoundVolume = SmokeSound.volume;
         SmokeSoundVolume = SmokeSound.volume;
-        originalScale = this.transform.localScale;
+        originalScale = carSprite.transform.localScale;
         txtScore.text = gs.hiScore.ToString(); txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gs.hiScore.ToString();
     }
 
@@ -97,7 +106,7 @@ public class CarController : MonoBehaviour
                 HEALTH = Mathf.Lerp(HEALTH, MinMaxSpeed.y, Time.deltaTime);
 
             if(firstLEFTandRIGHT){
-                this.transform.localScale = new Vector3(originalScale.x*0.875f, originalScale.y*1.125f, 1);
+                carSprite.transform.localScale = new Vector3(originalScale.x*0.87f, originalScale.y*1.13f, 1);
                 accelerationFactor = defaultAccelerationFactor * boostAcceleration;
                 SmokeSound.volume = SmokeSoundVolume*1.75F;
                 firstLEFTandRIGHT = false;
@@ -118,8 +127,8 @@ public class CarController : MonoBehaviour
 
             if(firstLEFT){
                 leftEffMain.startLifetime = smokeTime;
-                SmokeSound.pitch = 1.075f;
-                SmokeSound.panStereo = -0.5f;
+                SmokeSound.pitch = 1.025f;
+                SmokeSound.panStereo = -0.8f;
                 if(SmokeSound.volume < SmokeSoundVolume)
                     SmokeSound.volume = SmokeSoundVolume;
                 firstLEFT = false;
@@ -137,8 +146,8 @@ public class CarController : MonoBehaviour
 
             if(firstRIGHT){
                 rightEffMain.startLifetime = smokeTime;
-                SmokeSound.pitch = 0.925f;
-                SmokeSound.panStereo = +0.5f;
+                SmokeSound.pitch = 0.975f;
+                SmokeSound.panStereo = +0.8f;
                 if(SmokeSound.volume < SmokeSoundVolume)
                     SmokeSound.volume = SmokeSoundVolume;
                 firstRIGHT = false;
@@ -156,30 +165,37 @@ public class CarController : MonoBehaviour
         }
 
         steeringInput = Mathf.Clamp(steeringInput, -1, 1);
-        this.transform.localScale = Vector3.Lerp(transform.localScale, originalScale, Time.deltaTime * 2f);
+        carSprite.transform.localScale = Vector3.Lerp(carSprite.transform.localScale, originalScale, Time.deltaTime * 2f);
         
 
-        //Girar ruedas
+        //GIRAR RUEDAS
         Vector3 wheelRotation = new Vector3(0,0,steeringInput * -30);
         tyreLeft.transform.localEulerAngles = wheelRotation;
         tyreRight.transform.localEulerAngles = wheelRotation;
 
-        if(pauseMenu.paused && Mathf.Abs(steeringInput) >= 1){ //unpause
+        //EMPEZAR JUEGO
+        if(pauseMenu.paused && (RIGHT || LEFT)) { //Mathf.Abs(steeringInput) >= 1){
             pauseMenu.paused = false;
             pauseMenu.unPauseFirstPause();
         }
         if(pauseMenu.paused)
             return;
 
-        //Velocidad de cola
+        //VELOCIDAD DE COLA
         Vector3 v3TailSpeed = BackCollider.transform.position - previousTailPosition;
         tailSpeed = v3TailSpeed.magnitude*50;
         previousTailPosition = BackCollider.transform.position;
-        //Sonido motor
+        //SONIDO MOTOR
         EngineSound.pitch = 1 + ((carRigidbody2D.velocity.magnitude / MinMaxSpeed.y) * (1f + Mathf.Cos(Time.time*10) * 0.075f));
 
         //DERRAPANDO
-        isDrifting = rightVelocity.magnitude/carRigidbody2D.velocity.magnitude > 0.6f /*|| Mathf.Abs(steeringInput) > 0.8f*/;
+        float driftAmount = rightVelocity.magnitude/carRigidbody2D.velocity.magnitude;
+        if(driftAmount > 0.6f){
+            driftCoyote = driftAmount; 
+        }else if(driftAmount > 0){
+            driftCoyote -= Time.deltaTime * 3f; //Decrease coyote drift
+        }
+        isDrifting = driftCoyote > 0;
         if(isDrifting){
             trailRenderers[0].emitting = true;
             trailRenderers[1].emitting = true;
@@ -191,21 +207,57 @@ public class CarController : MonoBehaviour
             GravelSound.volume = Mathf.Lerp(GravelSound.volume, GravelSoundVolume*0.2f, Time.deltaTime*8);
         }
 
-        //Combo
-        if(COMBO > 1f)
-            COMBO -= Time.deltaTime * (isDrifting ? 0.2f : 4f); //Decrease derrapando
-        if(COMBO > 0.75f){
+        //COMBO
+        if(COMBO > 1f){
+            float decreaseRatio = 1f; //Decrease ratio / Tiempo que esta activo el combo
+            if(!comboPowerUp){
+                if(isDrifting)
+                    decreaseRatio = 0.2f;
+                else
+                    decreaseRatio = 3f;
+            }
+            COMBO -= Time.deltaTime * (decreaseRatio);
+        }else if (comboPowerUp){
+            comboPowerUp = false;
+            Instantiate(splashInvencible, invencibilityEffect.transform.position, invencibilityEffect.transform.rotation);
+            cam.Shake(0.1f, 0.1f, 175);
+            GetComponent<CapsuleCollider2D>().isTrigger = false;
+            colorGoWhite = 0;
+            invencibilityEffect.SetActive(false);
+        }
+        
+        if(!comboPowerUp && COMBO > 0.75f){
             txtCombo.text = "x" + Mathf.CeilToInt(COMBO); txtCombo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "x" + Mathf.CeilToInt(COMBO);
         }
+        
+        if(comboCooldown > 0)
+            comboCooldown -= Time.deltaTime;
+        
+        Color clr = carSprite.GetComponent<SpriteRenderer>().color;
+        Color newClr;
+        if (colorGoWhite < 0) {
+            newClr = invencibilityColor;
+            colorGoWhite -= Time.deltaTime;
+            if(colorGoWhite < -1)
+                colorGoWhite = 0.65f;
+        } else {
+            newClr = Color.white;
+            if(colorGoWhite > 0){
+                colorGoWhite += Time.deltaTime;
+                if(colorGoWhite > 1)
+                    colorGoWhite = -0.65f;
+            }
+        }
+        carSprite.GetComponent<SpriteRenderer>().color = Color.Lerp(clr, newClr, Time.deltaTime * 5);
 
-        //Health
+        //HEALTH REGEN
         if(HEALTH < MinMaxSpeed.x){
             engineEffectMain.emissionRate = Mathf.RoundToInt((MinMaxSpeed.x - (HEALTH))*20);
 
             EngineFailureSound.enabled = true;
             EngineFailureSound.pitch = 1 + ((MinMaxSpeed.y - HEALTH)-1);
             
-            HEALTH += Time.deltaTime*0.225f; // *inCombat  // Health regen rate
+            HEALTH += (0.2f + ((MinMaxSpeed.x - HEALTH)/MinMaxSpeed.x) * 0.175f) * Time.deltaTime;  // Health regen rate
             engineFullHP = false;
         }else{
             if(!engineFullHP){
@@ -217,10 +269,6 @@ public class CarController : MonoBehaviour
 
         if(justHitted > 0)
             justHitted -= Time.deltaTime;
-        if(inCombat < 1)
-            inCombat += Time.deltaTime;
-        else
-            inCombat = 1;
     }
 
     void FixedUpdate() {
@@ -252,40 +300,49 @@ public class CarController : MonoBehaviour
         carRigidbody2D.MoveRotation(rotationAngle);
     }
 
-    public void OnTriggerEnterChilds(Collider2D col, string colChild) {
-        if(colChild == "BACK" && isDrifting && !col.transform.CompareTag("Smoke"))
+    public void OnTriggerEnterChilds(Collider2D col, string colChild) { //COLLIDER COLA
+        if(colChild == "BACK" && !col.transform.CompareTag("Smoke") && (isDrifting || comboPowerUp))
         {
             if(col.transform.CompareTag("Enemy")) {
-                cam.Shake(0.125f, 0.115f, 60);
-                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x && HEALTH < MinMaxSpeed.x)
-                    carRigidbody2D.velocity += rightVelocity.normalized * 0.125f;
+                bool isGordo = col.GetComponent<zombieGordoController>() != null;
+                if(isGordo)
+                    cam.Shake(0.15f, 0.12f, 75);
+                else
+                    cam.Shake(0.125f, 0.115f, 50);
+
+                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x && HEALTH < MinMaxSpeed.x && !comboPowerUp) //Impulse on kill
+                    carRigidbody2D.velocity += (rightVelocity.normalized * 0.6f + carRigidbody2D.velocity.normalized * 0.15f);
 
                 col.gameObject.GetComponent<zombieFlacoController>().die();
 
-                writeScore();
+                writeScore(col.gameObject, isGordo);
             }else if(col.transform.CompareTag("Cacti")){
-                cam.Shake(0.1f, 0.115f, 30);
+                cam.Shake(0.075f, 0.075f, 35);
+                
+                if(carRigidbody2D.velocity.magnitude < MinMaxSpeed.x && HEALTH < MinMaxSpeed.x && !comboPowerUp) //Impulse on kill
+                    carRigidbody2D.velocity += (rightVelocity.normalized * 0.3f + carRigidbody2D.velocity.normalized * 0.075f);
+                    
                 col.gameObject.GetComponent<CactusController>().cut();
             }
-            inCombat = 0;
         }
     }
     
-    public void OnCollisionEnter2D(Collision2D col) {
-        if (col.contacts[0].otherCollider.transform.gameObject.name != transform.gameObject.name) //Check if local hitbox
+    public void OnCollisionEnter2D(Collision2D col) { //COLLIDER CABEZA
+        if (col.contacts[0].otherCollider.transform.gameObject.name != transform.gameObject.name || comboPowerUp) //Check if local hitbox
             return;
 
         float colForce = Vector2.Dot((transform.position - col.transform.position).normalized, -transform.up);
-        
-        if(colForce > 0.7f && justHitted <= 0){
+
+        if(colForce > 0.725f && justHitted <= 0){
             if(col.transform.CompareTag("Enemy"))
                 col.gameObject.GetComponent<zombieFlacoController>().die();
             else if(col.transform.CompareTag("Cacti"))
                 col.gameObject.GetComponent<CactusController>().cut();
 
-            HEALTH -= (0.25f + ((colForce - 0.5f)/2f)) * 4f;
+            HEALTH -= (0.4f + ((colForce - 0.5f)/2f)) * 3.25f; //
+            justHitted = 2;
+
             Instantiate(crashEffect, transform.position, crashEffect.transform.rotation);
-            justHitted = 1;
 
             if(HEALTH <= 0){ //DEAD
                 HEALTH = 0;
@@ -301,18 +358,22 @@ public class CarController : MonoBehaviour
     }
 
     public void OnTriggerStay2D(Collider2D col){
-        if(col.transform.CompareTag("Smoke")){
+        if(col.transform.CompareTag("Smoke") && !comboPowerUp){
             if(HEALTH > 0.5f){
-                HEALTH -= Time.deltaTime * 0.4f;
-                inCombat = 0;
+                HEALTH -= Time.deltaTime * 0.3f;
                 //cam.Shake(0.01f, 0.01f);
             }
         }
     }
 
-    void writeScore(){
+    void writeScore(GameObject enem, bool gordo) {
         string scoreStr;
-        SCORE += 1 * Mathf.Ceil(COMBO);
+        float scoreIncrease = (gordo ? 3 : 1) * (comboPowerUp ? 1 : Mathf.Ceil(COMBO));
+        SCORE += scoreIncrease;
+
+        GameObject upNum = Instantiate(scoreUpwardsNumber, enem.transform.localPosition, cam.transform.rotation);
+        upNum.GetComponent<TextMeshProUGUI>().text = scoreIncrease.ToString();
+
         if(txtScore.gameObject.transform.localScale.magnitude < 4f)
             txtScore.gameObject.transform.localScale *= 1.2f;
 
@@ -324,9 +385,29 @@ public class CarController : MonoBehaviour
         }
         txtScore.text = scoreStr; txtScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = scoreStr;
 
-        if(COMBO < 9)
-            COMBO += 1;
-        if(txtCombo.gameObject.transform.localScale.magnitude < 2.5f)
-            txtCombo.gameObject.transform.localScale *= 1.3f;
+        if(COMBO < 8 && !comboPowerUp){ //HASTA EL 10
+            if(comboCooldown <= 0){
+                COMBO = Mathf.Ceil(COMBO) + 1; //SUMA COMBO
+                
+                if(txtCombo.gameObject.transform.localScale.magnitude < 2.5f)
+                    txtCombo.gameObject.transform.localScale *= 1.3f;
+
+                comboCooldown = 0.25f; //tiempo para sumar combos
+            }
+        }
+        else if(!comboPowerUp){ //CUANDO LLEGA A 10
+            comboPowerUp = true;
+            cam.Shake(0.1f, 0.1f, 175);
+            Instantiate(splashInvencible, invencibilityEffect.transform.position, invencibilityEffect.transform.rotation);
+            GetComponent<CapsuleCollider2D>().isTrigger = true;
+            colorGoWhite = -1;
+            invencibilityEffect.SetActive(true);
+            txtCombo.text = "MAX"; txtCombo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "MAX";
+
+            HEALTH = MinMaxSpeed.x; //Curar full vida
+            EngineFailureSound.enabled = false;
+            engineFullHP = true;
+            engineEffectMain.emissionRate = Mathf.RoundToInt((MinMaxSpeed.x - (HEALTH))*20);
+        }
     }
 }

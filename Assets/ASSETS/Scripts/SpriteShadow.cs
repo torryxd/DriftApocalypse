@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpriteShadow : MonoBehaviour
 {
+    public bool shadowIfItsInChildren = false;
     public Vector2 offset = new Vector2(0.05f, 0.05f);
     public Material shadowMaterial;
     public Color shadowColor;
@@ -17,7 +18,15 @@ public class SpriteShadow : MonoBehaviour
     {
         transCaster = transform;
         transShadow = new GameObject().transform;
-        transShadow.parent = transCaster;
+
+        if(!shadowIfItsInChildren){
+            transShadow.localScale = transform.localScale;
+            transShadow.parent = transCaster;
+        }else{
+            transShadow.parent = transCaster;   
+            transShadow.localScale = transform.localScale;
+        }
+        
         transShadow.gameObject.name = "shadow";
         transShadow.localRotation = Quaternion.identity;
 
@@ -37,5 +46,6 @@ public class SpriteShadow : MonoBehaviour
     void LateUpdate() {
         transShadow.position = new Vector2(transCaster.position.x + offset.x, transCaster.position.y + offset.y);
         sprRndShadow.sprite = sprRndCaster.sprite;
+        sprRndShadow.flipX = sprRndCaster.flipX;
     }
 }

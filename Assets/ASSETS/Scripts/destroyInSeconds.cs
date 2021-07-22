@@ -7,6 +7,7 @@ public class destroyInSeconds : MonoBehaviour
     public float timeToDestroyObject = 0;
     public Component component;
     public float timeToDestroyComponent = 0;
+    
     // Start is called before the first frame update
     void Start()
     {

@@ -8,7 +8,7 @@ public class lookAtCamera : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        camTrans = FindObjectOfType<Camera>().gameObject.transform;
+        camTrans = FindObjectOfType<CamController>().gameObject.transform;
         this.transform.rotation = camTrans.transform.rotation;
         
         if(!FindObjectOfType<GlobalSettings>().mobileCam)

@@ -44,6 +44,8 @@
      <Compile Include="Assets\ASSETS\Scripts\splashController.cs" />
      <Compile Include="Assets\ASSETS\Scripts\SpriteShadow.cs" />
      <Compile Include="Assets\ASSETS\Scripts\PauseMenu.cs" />
+     <Compile Include="Assets\ASSETS\Scripts\FireballController.cs" />
+     <Compile Include="Assets\ASSETS\Scripts\MusicController.cs" />
      <Compile Include="Assets\ASSETS\Scripts\CamController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
      <Compile Include="Assets\ASSETS\Scripts\EscenarioController.cs" />
@@ -51,13 +53,17 @@
      <Compile Include="Assets\ASSETS\Scripts\CarController.cs" />
      <Compile Include="Assets\ASSETS\Scripts\colorFader.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+     <Compile Include="Assets\ASSETS\Scripts\randomPitch.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
      <Compile Include="Assets\ASSETS\Scripts\interactionButton.cs" />
      <Compile Include="Assets\ASSETS\Scripts\MainMenu.cs" />
      <Compile Include="Assets\ASSETS\Scripts\humoGordo.cs" />
+     <Compile Include="Assets\ASSETS\Scripts\ScreenShakeController.cs" />
+     <Compile Include="Assets\ASSETS\Scripts\FadeMove.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
      <Compile Include="Assets\ASSETS\Scripts\eventButton.cs" />
+     <Compile Include="Assets\ASSETS\Scripts\upwardNumber.cs" />
      <Compile Include="Assets\Wolv Interactive\Pixel Perfect Retro Camera\Scripts\PixelCamera.cs" />
      <Compile Include="Assets\ASSETS\Scripts\lookAtCamera.cs" />
      <Compile Include="Assets\ASSETS\Scripts\TriggerDetector.cs" />
@@ -65,6 +71,7 @@
      <Compile Include="Assets\ASSETS\Scripts\CactusController.cs" />
      <Compile Include="Assets\ASSETS\Scripts\TextMovement.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
+     <Compile Include="Assets\ASSETS\Scripts\InicioTransition.cs" />
      <Compile Include="Assets\ASSETS\Scripts\zombieFlacoController.cs" />
      <Compile Include="Assets\Wolv Interactive\Pixel Perfect Retro Camera\Scenes\Example\Spin.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

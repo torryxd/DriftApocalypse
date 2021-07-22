@@ -19,11 +19,14 @@ public class CamController : MonoBehaviour
 	private float freezeMS = 50f;
 	private bool freezeCancel = false;
 
+    private float timeIsFrozen;
+
     float fpsDeltaTime = 0.0f;
 
     [Header("Components")]
     public CarController car;
     public PauseMenu pauseMenu;
+    public ScreenShakeController screenshake;
 
     void Start() {
         gs = FindObjectOfType<GlobalSettings>();
@@ -35,7 +38,7 @@ public class CamController : MonoBehaviour
 
     void Update() {
         
-        if(pauseMenu.paused)
+        if(pauseMenu.paused || pauseMenu.isGamingOver)
             return;
 
         Vector3 v3speed = new Vector3(car.GetComponent<Rigidbody2D>().velocity.x, car.GetComponent<Rigidbody2D>().velocity.y, 0);
@@ -64,60 +67,21 @@ public class CamController : MonoBehaviour
             
         }
 
-        //camera screenshake
-        if(Input.GetKeyDown(KeyCode.S))
-            this.Shake(0.15f, 0.1f, 60);
-
         //FPS
         fpsDeltaTime += (Time.unscaledDeltaTime - fpsDeltaTime) * 0.1f;
-        
+
+
+        //Try screenshake
+        if(Input.GetKeyDown(KeyCode.S))
+            Shake(0.2f, 0.5f, 60);
     }
 
     public void Shake(float magnitude, float duration, int freezeTime = 0){
-		if(!isShaking){
-			isShaking = true;
-			if(freezeTime > 0){
-				freezeMS = freezeTime;
-				StartCoroutine(Freeze(magnitude, duration));
-			}else{
-				StartCoroutine(justShake(magnitude, duration));
-			}
+		if(!gs.muteScreenshake){
+			screenshake.Shakes(magnitude, duration, freezeTime);
 		}
 	}
-    public IEnumerator justShake(float magnitude, float duration)
-    {
-        Vector3 originalPosition = transform.position;
-        float elapsed = 0f;
 
-        while (elapsed < duration)
-        {
-			float rnd = Random.Range(0f, 1f);
-			float x = Random.Range(-rnd, rnd) * magnitude;
-			float y = Random.Range(-(1-rnd), (1-rnd)) * magnitude;
-
-			transform.position = originalPosition + new Vector3(x, y, 0);
-			elapsed += Time.unscaledDeltaTime;
-			yield return 0;
-        }
-        transform.position = originalPosition;
-		isShaking = false;
-    }
-	public IEnumerator Freeze(float magnitude, float duration)
-    {
-		float ts = Time.timeScale;
-		freezeCancel = false;
-
-		Time.timeScale = 0;
-		yield return new WaitForSecondsRealtime(freezeMS / 1000f);
-		if(!freezeCancel){
-			Time.timeScale = ts;
-		}
-		StartCoroutine(justShake(magnitude, duration));
-    }
-    public void cancelFreeze(){
-		freezeCancel = true;
-	}
-    
 	void OnGUI()
 	{
 		int w = Screen.width, h = Screen.height;
