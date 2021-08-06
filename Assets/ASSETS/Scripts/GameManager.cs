@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public bool RESPAWN = true;
     public float spawnRadius = 10;
     [SerializeField]
     private float spawnQueue = 1;
@@ -44,9 +45,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void IncreaseRate(){
-        spawnQueue += incrementSpawnQueue;
-        incrementSpawnQueue *= decrementBySpawn;
+        if(RESPAWN){
+            spawnQueue += incrementSpawnQueue;
+            incrementSpawnQueue *= decrementBySpawn;
 
-        SpawningZombie();
+            SpawningZombie();
+        }
     }
 }

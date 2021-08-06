@@ -15,6 +15,8 @@ public class EscenarioController : MonoBehaviour
     public GameObject cacti;
     public GameObject path;
 
+    public bool noGenerarCactus = false;
+
     void Start(){
         escenarioSizes.x = escenarioRadius*2f;
         escenarioSizes.y = escenarioRadius*2f;
@@ -27,8 +29,9 @@ public class EscenarioController : MonoBehaviour
                 if(calcCirc.magnitude <= escenarioRadius-0.5f){
                     if(calcCirc.magnitude > 2){ //Dejar centro
                         float sample = Mathf.PerlinNoise((x + perlinOffSet.x) * perlinScale, (y + perlinOffSet.y) * perlinScale);
-                        if(sample > 0.75f && sample < 0.85f){ //Probabilidad de cactus 
-                            generarObjeto(x, y, cacti, 0.3f);
+                        if(sample > 0.75f && sample < 0.85f){ //Probabilidad de cactus
+                            if(!noGenerarCactus)
+                                generarObjeto(x, y, cacti, 0.3f);
                         }else if(sample < 0.415f){ //Probabilidad de camino
                             generarObjeto(x, y, path, 0.3f);  
                         }
@@ -38,6 +41,11 @@ public class EscenarioController : MonoBehaviour
                 }
             }
         }
+
+        //Reload script lo load car data
+        CarStorage carStorage = FindObjectOfType<CarStorage>();
+        carStorage.StartStats();
+
         Destroy(this);
     }
 

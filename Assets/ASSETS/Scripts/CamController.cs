@@ -45,9 +45,10 @@ public class CamController : MonoBehaviour
         
         //camera offset
         bool boosting = car.accelerationFactor != car.defaultAccelerationFactor;
+        float boostFactor = (boosting && car.boostAcceleration > 1 ? 0.525f : 0.5f);
         Vector3 desiredPosition = new Vector3(
-            car.transform.position.x + (v3speed.x * (boosting ? 0.525f : 0.5f)) + (car.transform.up.normalized.x * 0.4f),
-            car.transform.position.y + (v3speed.y * (boosting ? 0.525f : 0.5f)) + (car.transform.up.normalized.y * 0.4f),
+            car.transform.position.x + (v3speed.x * boostFactor) + (car.transform.up.normalized.x * 0.4f),
+            car.transform.position.y + (v3speed.y * boostFactor) + (car.transform.up.normalized.y * 0.4f),
             this.transform.position.z);
         transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothOffsetSpeed * Time.unscaledDeltaTime);
         
@@ -72,8 +73,8 @@ public class CamController : MonoBehaviour
 
 
         //Try screenshake
-        if(Input.GetKeyDown(KeyCode.S))
-            Shake(0.2f, 0.5f, 60);
+        //if(Input.GetKeyDown(KeyCode.S))
+        //    Shake(0.2f, 0.5f, 60);
     }
 
     public void Shake(float magnitude, float duration, int freezeTime = 0){
@@ -95,6 +96,7 @@ public class CamController : MonoBehaviour
 		float msec = fpsDeltaTime * 1000.0f;
 		float fps = 1.0f / fpsDeltaTime;
 		string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
-		GUI.Label(rect, text, style);
+        
+		//GUI.Label(rect, text, style);
 	} 
 }

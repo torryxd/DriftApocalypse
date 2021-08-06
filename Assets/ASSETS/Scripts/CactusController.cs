@@ -14,6 +14,7 @@ public class CactusController : MonoBehaviour
 
     public void cut(){
         GetComponent<CircleCollider2D>().enabled = false;
+        GetComponent<CapsuleCollider2D>().enabled = false;
         GetComponent<SpriteShadow>().offset = Vector2.one * 0.01f;
         Instantiate(effect, transform.position, effect.transform.rotation);
         spr.sprite = sprites[0];

@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class TriggerDetector : MonoBehaviour
 {
-    private CarController car;
-
-    void Start (){
-        car = transform.parent.GetComponent<CarController>();
-    }
+    public CarController car;
 
     void OnTriggerEnter2D(Collider2D col){
         car.OnTriggerEnterChilds(col, this.transform.name);

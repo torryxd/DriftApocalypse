@@ -39,17 +39,16 @@ public class zombieFlacoController : MonoBehaviour
         if(comportamiento == 1){ // NORMAL
             defaultMaxSpeed *= 1f;
         }else if(comportamiento == 2){ // DIAGONAL
-            defaultMaxSpeed *= 1.2f;
+            defaultMaxSpeed *= 1.175f;
         }else if(comportamiento == 3){ // FLANQUEADOR
-            defaultMaxSpeed *= 1.5f;
+            defaultMaxSpeed *= 1.4f;
         }else if(comportamiento == 4){ // COBARDE
-            defaultMaxSpeed *= 0.4f;
+            defaultMaxSpeed *= 0.45f;
         }
         
         //Dificultad relativa a la score
         defaultMaxSpeed *= 1f + (Mathf.Sqrt(car.SCORE) / 30f);
-        moveForce *= 1f + (Mathf.Sqrt(car.SCORE) / 80f);
-
+        moveForce *= 1f + (Mathf.Sqrt(car.SCORE) / 78f);
     }
 
     void Update(){
@@ -83,7 +82,7 @@ public class zombieFlacoController : MonoBehaviour
                 v2 = (car.transform.position + car.transform.right*4*(defaultMaxSpeed > originalMaxSpeed ? 1 : -1)) - this.transform.position;
                 rb2d.AddForce(v2.normalized * moveForce);
             }else if(comportamiento == 3){ // FLANQUEADOR
-                if(carDist > 5f){
+                if(carDist > 6f){
                     flankVec = v2;
                 }
                 rb2d.AddForce(flankVec.normalized * moveForce);
@@ -109,7 +108,7 @@ public class zombieFlacoController : MonoBehaviour
 
         GameObject squish = Instantiate(squishEffect, transform.position, squishEffect.transform.rotation);
         squish.GetComponent<AudioSource>().pitch *= 1f + (0.9f * (car.COMBO/10f));
-        squish.transform.eulerAngles = new Vector3(0,0, Vector2.Angle(transform.position - car.transform.Find("BACK").transform.position, cam.transform.up));
+        squish.transform.eulerAngles = new Vector3(0,0, Vector2.Angle(transform.position - car.transform.GetChild(0).Find("BACK").transform.position, cam.transform.up));
         
         if(this.gameObject.GetComponent<zombieGordoController>() != null)
             squish.transform.localScale *= 1.5f;

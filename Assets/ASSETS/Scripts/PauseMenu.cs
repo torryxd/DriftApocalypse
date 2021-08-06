@@ -25,6 +25,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject GameOverScreen;
     public TextMeshProUGUI txtLastScore;
     public TextMeshProUGUI txtBestScore;
+    public TextMeshProUGUI txtCoins;
     public Slider sliderScore;
     private int bestScore;
 
@@ -33,6 +34,7 @@ public class PauseMenu : MonoBehaviour
     private float isFading = 1;
     private bool loadingScene = false;
     private string sceneToLoad = "";
+    private float waitAbit = 1.2f;
 
     [Header("Components")]
     public CarController carController;
@@ -58,9 +60,9 @@ public class PauseMenu : MonoBehaviour
             Pause();
         
         if(firstTimePause){ //IMGS positions
-            RightArrow.transform.localPosition = Vector2.Lerp(RightArrow.transform.localPosition, new Vector2(500, 0), Time.fixedDeltaTime * 2.25f);
-            LeftArrow.transform.localPosition = Vector2.Lerp(LeftArrow.transform.localPosition, new Vector2(-500, 0), Time.fixedDeltaTime * 2.5f);
-            textHold.transform.localPosition = Vector2.Lerp(textHold.transform.localPosition, new Vector2(0, 100), Time.fixedDeltaTime * 3);
+            RightArrow.transform.localPosition = Vector2.Lerp(RightArrow.transform.localPosition, new Vector2(500, 0), Time.fixedDeltaTime * 2.75f);
+            LeftArrow.transform.localPosition = Vector2.Lerp(LeftArrow.transform.localPosition, new Vector2(-500, 0), Time.fixedDeltaTime * 2.75f);
+            textHold.transform.localPosition = Vector2.Lerp(textHold.transform.localPosition, new Vector2(0, 100), Time.fixedDeltaTime * 2.65f);
 
             cam.GetComponent<Camera>().orthographicSize = Mathf.Lerp(cam.GetComponent<Camera>().orthographicSize, 0.5f + 2.5f * Mathf.Abs(Mathf.Abs(carController.steeringInput)-1), Time.deltaTime * 5);
         }else if(FadeScreen.activeSelf){
@@ -97,15 +99,28 @@ public class PauseMenu : MonoBehaviour
 
                     if(carController.SCORE < bestScore){
                         sliderScore.value = carController.SCORE / bestScore;
-                        txtBestScore.text = "Best: " + bestScore; txtBestScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Best: " + bestScore;
+                        txtBestScore.text = "Your best: " + bestScore; txtBestScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Your best: " + bestScore;
                     }else{
                         sliderScore.value = 1;
                         txtBestScore.text = "NEW HIGH SCORE!"; txtBestScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "NEW HIGH SCORE!";
                     }
-                    txtLastScore.text = "Last: " + carController.SCORE; txtLastScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Last: " + carController.SCORE;
+                    txtLastScore.text = "Score: " + carController.SCORE; txtLastScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + carController.SCORE;
+
+                    int n = Mathf.FloorToInt((carController.SCORE + gs.pointsToReachACoin)/100f);
+                    if(n >= 1){
+                        gs.pointsToReachACoin = 0;
+                    }else{
+                        gs.pointsToReachACoin += Mathf.FloorToInt(carController.SCORE);
+                    }
+
+                    gs.driftocoins += n;
+                    txtCoins.text = "+" + n; txtCoins.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "+" + n;
 
                 }else{
-                    GameOverScreen.transform.localPosition = Vector2.Lerp(GameOverScreen.transform.localPosition, new Vector2(0, -50), Time.fixedDeltaTime * 2);
+                    if(waitAbit < 0)
+                        GameOverScreen.transform.localPosition = Vector2.Lerp(GameOverScreen.transform.localPosition, new Vector2(0, -50), Time.unscaledDeltaTime * 3);
+                    else
+                        waitAbit -= Time.unscaledDeltaTime;
                 }
             }
 
@@ -113,7 +128,7 @@ public class PauseMenu : MonoBehaviour
                 Color clr = GameOverScreen.GetComponent<Image>().color;
                 GameOverScreen.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, isFading);
 
-                isFading -= Time.unscaledDeltaTime * 3;
+                isFading -= Time.unscaledDeltaTime * 4;
                 if (isFading < 0) {
                     GameOverScreen.transform.localPosition = new Vector3(0, 2000, GameOverScreen.transform.localPosition.z);
                     GameOverScreen.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 1);
@@ -130,7 +145,7 @@ public class PauseMenu : MonoBehaviour
                 audioMixer.ClearFloat("Feedback");
                 SceneManager.LoadScene(sceneToLoad);
             }else{
-                GameOverScreen.transform.localPosition = Vector2.Lerp(GameOverScreen.transform.localPosition, new Vector2(0, -50), Time.fixedDeltaTime * 3);
+                GameOverScreen.transform.localPosition = Vector2.Lerp(GameOverScreen.transform.localPosition, new Vector2(0, -50), Time.unscaledDeltaTime * 3);
             }
         }
     }

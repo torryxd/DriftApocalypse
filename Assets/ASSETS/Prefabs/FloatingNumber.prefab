@@ -147,4 +147,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b74fdc2ae22e94dbcf9be7008532a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RandomGrito: {fileID: 6056095186491366539, guid: 7e1ad84b10033c64ebfed9e9fc8163d0, type: 3}
   moveOnPause: 1

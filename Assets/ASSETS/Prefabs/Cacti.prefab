@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6824609270974226287}
   - component: {fileID: 2165488092185769674}
   - component: {fileID: 8304962398695074249}
+  - component: {fileID: 2727539161676725269}
   m_Layer: 0
   m_Name: Cacti
   m_TagString: Cacti
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c917d3d5518884e832decf33b29741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  createAsChildren: 1
+  shadowIfItsInChildren: 0
   offset: {x: 0.06, y: 0.06}
   shadowMaterial: {fileID: 2100000, guid: 610f93298e0863343b133c5a1a501124, type: 2}
   shadowColor: {r: 0.2509804, g: 0.32156864, b: 0.36078432, a: 1}
@@ -78,7 +79,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.03}
   serializedVersion: 2
-  m_Radius: 0.03
+  m_Radius: 0.025
 --- !u!114 &8304962398695074249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +99,22 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2dbf133f6eecd4942b3ce545603a254e, type: 3}
   spr: {fileID: 3138874180023570685}
   effect: {fileID: 1727845710777973322, guid: f03dddc61e7751a4880e75b9a9b35447, type: 3}
+--- !u!70 &2727539161676725269
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8304962399426355297}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.03}
+  m_Size: {x: 0.13, y: 0.13}
+  m_Direction: 0
 --- !u!1 &8931293961070537050
 GameObject:
   m_ObjectHideFlags: 0

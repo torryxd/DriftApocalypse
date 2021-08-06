@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 5563064374981673866}
   - component: {fileID: 2355288161511787382}
   - component: {fileID: 8086848471012522440}
+  - component: {fileID: 964748739}
   m_Layer: 0
   m_Name: CactusCrash
   m_TagString: Untagged
@@ -5093,13 +5094,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 54136039101240998, guid: 4ce40f060049dc74aa4e6e2f4b2ffdda, type: 2}
   m_audioClip: {fileID: 8300000, guid: c3fde86c9e14eed49b2d9db39338bf04, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.75
-  m_Pitch: 0.9
+  m_Volume: 0.7
+  m_Pitch: 0.8
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 162
+  Priority: 90
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -5192,6 +5193,19 @@ MonoBehaviour:
   timeToDestroyObject: 2
   component: {fileID: 0}
   timeToDestroyComponent: 0.1
+--- !u!114 &964748739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3535165438374240717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d3b7e9438d32846854eb6650dc9d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rndRegion: 0.1
 --- !u!1 &5044525959461390048
 GameObject:
   m_ObjectHideFlags: 0
@@ -5536,6 +5550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8899c6ade4857bd48a3a9a354a635d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDestroyObject: 0.075
+  timeToDestroyObject: 0.0775
   component: {fileID: 0}
   timeToDestroyComponent: 0
