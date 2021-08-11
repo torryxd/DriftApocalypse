@@ -55,7 +55,7 @@ public class MainMenu : MonoBehaviour
     void Update() {
         if(!isFaded){
             if(Vector3.Distance(Fade.transform.localPosition, new Vector3(0,-10,0)) > 1)
-                Fade.transform.localPosition = Vector2.Lerp(Fade.transform.localPosition, new Vector3(0,-10,0), Time.fixedDeltaTime * 2);
+                Fade.transform.localPosition = Vector2.Lerp(Fade.transform.localPosition, new Vector3(0,-10,0), Time.fixedDeltaTime * 1.5f);
             else{
                 isFaded = true;
                 Fade.transform.localPosition = FadePos;
@@ -100,7 +100,7 @@ public class MainMenu : MonoBehaviour
 
     public void loadScene(string sceneName){
         if(isFaded){
-            if(gs.unlockedCars[gs.selectedCar]){
+            if(gs.PREMIUM || gs.unlockedCars[gs.selectedCar]){
                 Time.timeScale = 1;
                 //SceneManager.LoadScene(sceneName);
                 InicioTransition it = FindObjectOfType<InicioTransition>();
@@ -113,14 +113,6 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    public void changeCredits(){
-        if(screenToShow == 1){
-            screenToShow = 2;
-        }else if(screenToShow == 2){
-            screenToShow = 1;
-        }
-        updateScreens(0);
-    }
     public void updateScreens(int n){
         if(n == 0)
             n = screenToShow;

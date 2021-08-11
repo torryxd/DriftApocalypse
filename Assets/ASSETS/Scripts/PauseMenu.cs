@@ -85,6 +85,7 @@ public class PauseMenu : MonoBehaviour
                 if (GameOverScreen.transform.localPosition.y < 0) {
                     isGamedOver = true;
                     Debug.Log("SHOW ANUNCIO");
+                    FindObjectOfType<AdsManager>().PlayAd();
 
                     gameOverLayer.SetActive(true);
                     audioMixer.SetFloat("Effects", -20);
@@ -107,12 +108,10 @@ public class PauseMenu : MonoBehaviour
                     txtLastScore.text = "Score: " + carController.SCORE; txtLastScore.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Score: " + carController.SCORE;
 
                     int n = Mathf.FloorToInt((carController.SCORE + gs.pointsToReachACoin)/100f);
-                    if(n >= 1){
-                        gs.pointsToReachACoin = 0;
-                    }else{
-                        gs.pointsToReachACoin += Mathf.FloorToInt(carController.SCORE);
-                    }
+                    gs.pointsToReachACoin += (Mathf.FloorToInt(carController.SCORE) % 100);
 
+                    if(n < 1)
+                        n = 1;
                     gs.driftocoins += n;
                     txtCoins.text = "+" + n; txtCoins.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "+" + n;
 

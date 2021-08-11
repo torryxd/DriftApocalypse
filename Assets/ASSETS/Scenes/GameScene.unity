@@ -18183,6 +18183,7 @@ GameObject:
   - component: {fileID: 753394122}
   - component: {fileID: 753394121}
   - component: {fileID: 753394124}
+  - component: {fileID: 753394125}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -18314,6 +18315,18 @@ MonoBehaviour:
   carController: {fileID: 736518586}
   cam: {fileID: 519420033}
   audioMixer: {fileID: 24100000, guid: 4ce40f060049dc74aa4e6e2f4b2ffdda, type: 2}
+--- !u!114 &753394125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753394119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f74792aa739c74cb14e9793178718e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &772753461
 GameObject:
   m_ObjectHideFlags: 0
@@ -21217,7 +21230,7 @@ MonoBehaviour:
   driftocoins: 0
   unlockedCars: 0000000000
   selectedCar: 0
-  noAds: 0
+  PREMIUM: 0
   pointsToReachACoin: 0
 --- !u!4 &1285640879
 Transform:

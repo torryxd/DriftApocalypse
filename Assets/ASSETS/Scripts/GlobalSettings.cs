@@ -14,7 +14,7 @@ public class GlobalSettings : MonoBehaviour
     public int driftocoins = 0;
     public bool[] unlockedCars = new bool[5];
     public int selectedCar = 0;
-    public bool noAds = false;
+    public bool PREMIUM = false;
     public int pointsToReachACoin = 0;
 
     private static GlobalSettings instanceExists = null;
@@ -53,7 +53,7 @@ public class GlobalSettings : MonoBehaviour
             PlayerPrefs.SetInt("unlockedCar" + i, ((unlockedCars[i])) ? 1 : 0);
         }
         PlayerPrefs.SetInt("selectedCar", selectedCar);
-        PlayerPrefs.SetInt("noAds", (noAds ? 1 : 0));
+        PlayerPrefs.SetInt("PREMIUM", (PREMIUM ? 1 : 0));
         PlayerPrefs.SetInt("pointsToReachACoin", pointsToReachACoin);
     }
     public void LoadPlayerPrefs(){
@@ -70,7 +70,7 @@ public class GlobalSettings : MonoBehaviour
             unlockedCars[i] = PlayerPrefs.GetInt("unlockedCar"+i) == 0 ? false : true;
         }
         selectedCar = PlayerPrefs.GetInt("selectedCar");
-        noAds = PlayerPrefs.GetInt("noAds") == 0 ? false : true;
+        PREMIUM = PlayerPrefs.GetInt("PREMIUM") == 0 ? false : true;
         pointsToReachACoin = PlayerPrefs.GetInt("pointsToReachACoin");
     }
 }
